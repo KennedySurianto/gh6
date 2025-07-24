@@ -1,41 +1,50 @@
-import type React from "react"
+"use client";
 
-import { useState } from "react"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "@/lib/firebase"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Eye, EyeOff, LogIn } from "lucide-react"
+import type React from "react";
+
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Eye, EyeOff, LogIn } from "lucide-react";
 
 interface LoginFormProps {
-  onToggle: () => void
+  onToggle: () => void;
 }
 
 export default function LoginForm({ onToggle }: LoginFormProps) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(auth, email, password);
       // Redirect or handle successful login
-      console.log("Login successful")
+      console.log("Login successful");
     } catch (error: any) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Card className="w-full shadow-lg border-0 bg-white/90 backdrop-blur-sm">
@@ -43,7 +52,9 @@ export default function LoginForm({ onToggle }: LoginFormProps) {
         <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <LogIn className="w-6 h-6 text-amber-800" />
         </div>
-        <CardTitle className="text-2xl font-bold text-amber-900">Masuk</CardTitle>
+        <CardTitle className="text-2xl font-bold text-amber-900">
+          Masuk
+        </CardTitle>
         <CardDescription className="text-amber-700">
           Masukkan email dan password untuk masuk ke akun Anda
         </CardDescription>
@@ -52,7 +63,9 @@ export default function LoginForm({ onToggle }: LoginFormProps) {
         <CardContent className="space-y-4">
           {error && (
             <Alert className="border-red-200 bg-red-50">
-              <AlertDescription className="text-red-700">{error}</AlertDescription>
+              <AlertDescription className="text-red-700">
+                {error}
+              </AlertDescription>
             </Alert>
           )}
           <div className="space-y-2">
@@ -121,5 +134,5 @@ export default function LoginForm({ onToggle }: LoginFormProps) {
         </CardFooter>
       </form>
     </Card>
-  )
+  );
 }
