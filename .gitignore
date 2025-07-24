@@ -1,0 +1,11 @@
+*.env
+
+nara-ai/audio-similiarity/venv/
+
+nara-ai/.env
+
+serviceAccountKey.json
+
+**/__pycache__/
+
+.vscode/
