@@ -25,7 +25,7 @@
 ## 🛠️ Tech Stack
 
 * **Frontend**: Next.js, TypeScript, Tailwind, Shadcn/ui
-* **Backend**: Flask (ML API), Node.js (WebSocket), Firebase
+* **Backend**: Flask (ML API), Firebase
 * **AI**: TensorFlow/Keras
 * **Real-time**: Pusher
 
