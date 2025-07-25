@@ -79,9 +79,9 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Javanese script floating elements */}
+      {/* Lontara script floating elements */}
       <div className="absolute inset-0">
-        {["ꦲ", "ꦤ", "ꦕ", "ꦫ", "ꦏ", "ꦢ", "ꦠ", "ꦱ", "ꦮ", "ꦭ"].map((char, i) => (
+        {["ᨄ", "ᨉ", "ᨍ", "ᨐ", "ᨊ", "ᨈ", "ᨒ", "ᨀ"].map((char, i) => (
           <div
             key={char}
             className="absolute text-2xl font-bold text-amber-200/15 animate-float cursor-hover indonesiana-decorative"
@@ -123,33 +123,6 @@ export function Hero() {
               </div>
 
               <div className="text-left">
-                {/* <div className="relative">
-                  <h1
-                    className="text-8xl md:text-9xl font-bold mb-4 tracking-tight animate-gradient drop-shadow-2xl indonesiana-title"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #f7e6a3 0%, #d4af37 25%, #b8860b 50%, #8b4513 75%, #654321 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      textShadow:
-                        "2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.5)",
-                      filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.8))",
-                    }}
-                  >
-                    Nara
-                  </h1>
-                  <h1
-                    className="absolute top-0 left-0 text-8xl md:text-9xl font-bold mb-4 tracking-tight indonesiana-title"
-                    style={{
-                      WebkitTextStroke: "2px #8b4513",
-                      WebkitTextFillColor: "transparent",
-                      zIndex: -1,
-                    }}
-                  >
-                    Nara
-                  </h1>
-                </div> */}
                 <h1
                   className="text-8xl md:text-9xl font-bold mb-4 tracking-tight animate-gradient drop-shadow-2xl indonesiana-title"
                   style={{
@@ -174,7 +147,7 @@ export function Hero() {
                   className="text-xl font-medium mt-2 text-amber-200 drop-shadow-lg indonesiana-decorative"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}
                 >
-                  ꦤꦫ - ꦤꦺꦤꦺꦏ꧀ ꦤꦸꦱꦤ꧀ꦠꦫ
+                  ᨊᨑ - ᨊᨙᨊᨙᨀᨛ ᨊᨘᨔᨊᨈᨑ
                 </p>
               </div>
             </div>
@@ -195,7 +168,7 @@ export function Hero() {
               <div className="flex items-center gap-4 text-amber-900">
                 <BookOpen className="w-8 h-8 text-amber-800" />
                 <div className="text-left">
-                  <p className="font-bold text-lg">Learn Javanese Scripts</p>
+                  <p className="font-bold text-lg">Learn Lontara Scripts</p>
                   <p className="text-sm poppins-regular">
                     Interactive gamified learning experience
                   </p>
@@ -205,58 +178,6 @@ export function Hero() {
             </div>
           </div>
         </div>
-
-        {/* Enhanced feature cards with brown theme */}
-        {/* <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-5xl mx-auto transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
-          {[
-            {
-              icon: Mic,
-              label: "Record Stories",
-              color: "from-amber-600 to-yellow-700",
-              javanese: "ꦫꦺꦏꦩ꧀",
-            },
-            {
-              icon: Upload,
-              label: "Upload Audio",
-              color: "from-yellow-700 to-amber-800",
-              javanese: "ꦲꦥ꧀ꦭꦺꦴꦢ꧀",
-            },
-            {
-              icon: BookOpen,
-              label: "Learn Scripts",
-              color: "from-amber-800 to-yellow-600",
-              javanese: "ꦱꦶꦤꦸ",
-            },
-            {
-              icon: Map,
-              label: "Explore Map",
-              color: "from-yellow-600 to-amber-700",
-              javanese: "ꦗꦗꦃ",
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="group bg-amber-50/95 backdrop-blur-sm rounded-2xl p-8 border-2 border-amber-200 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-hover"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div
-                className={`w-16 h-16 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300 shadow-lg`}
-              >
-                <item.icon className="w-8 h-8 text-white" />
-              </div>
-              <p className="text-sm font-medium text-amber-900 group-hover:text-yellow-800 transition-colors mb-2 poppins-medium">
-                {item.label}
-              </p>
-              <p className="text-xs text-amber-700 font-medium indonesiana-decorative">
-                {item.javanese}
-              </p>
-            </div>
-          ))}
-        </div> */}
       </div>
     </section>
   );

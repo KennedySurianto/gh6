@@ -126,139 +126,20 @@ export default function LandingPage() {
                       variant="ghost"
                       className="text-gray-700 hover:text-orange-600 poppins-reguler"
                     >
-                      Masuk
+                      Login
                     </Button>
                   </Link>
                   <Link href="/register">
                     <Button className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg">
-                      Daftar Gratis
+                      Sign Up
                     </Button>
                   </Link>
                 </>
               )}
-            </div>  
+            </div>
           </div>
         </div>
       </nav>
-
-      {/* Hero Section */}
-      {/* <section className="relative py-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 -translate-x-10"
-              }`}
-            >
-              <Badge className="bg-orange-100 text-orange-800 border-orange-200 mb-4">
-                🎉 Platform Pembelajaran #1 di Indonesia
-              </Badge>
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Belajar{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-500">
-                  Aksara Jawa
-                </span>{" "}
-                dengan Mudah
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Bergabunglah dengan ribuan pelajar yang sudah menguasai aksara
-                Jawa bersama NARA, maskot AI yang akan memandu perjalanan
-                belajarmu dengan cara yang menyenangkan!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/register">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    Mulai Belajar Gratis
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                <Link href="/demo">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-orange-300 text-orange-600 hover:bg-orange-50 bg-transparent"
-                  >
-                    <Play className="mr-2 w-5 h-5" />
-                    Lihat Demo
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex items-center gap-8 mt-8 pt-8 border-t border-gray-200">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">10K+</div>
-                  <div className="text-sm text-gray-600">Pelajar Aktif</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">25+</div>
-                  <div className="text-sm text-gray-600">Pelajaran</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">4.9★</div>
-                  <div className="text-sm text-gray-600">Rating</div>
-                </div>
-              </div>
-            </div>
-            <div
-              className={`transition-all duration-1000 delay-300 ${
-                isVisible
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 translate-x-10"
-              }`}
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-3xl blur-3xl opacity-20"></div>
-                <Card className="relative bg-white/90 backdrop-blur-sm shadow-2xl border-0 rounded-3xl overflow-hidden">
-                  <CardContent className="p-8">
-                    <div className="text-center mb-6">
-                      <div className="w-24 h-24 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
-                        <Image
-                          src="/mascot-nara.png"
-                          alt="NARA Mascot"
-                          width={80}
-                          height={80}
-                          className="rounded-full"
-                        />
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                        Halo! Aku NARA
-                      </h3>
-                      <p className="text-gray-600">
-                        Aku akan membantu kamu belajar aksara Jawa dengan cara
-                        yang menyenangkan!
-                      </p>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-green-500" />
-                        <span className="text-sm text-gray-700">
-                          Pelajaran interaktif dan mudah dipahami
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
-                        <span className="text-sm text-gray-700">
-                          Latihan menulis dengan teknologi AI
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-purple-500" />
-                        <span className="text-sm text-gray-700">
-                          Sistem reward dan achievement
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       <Hero />
 
@@ -267,11 +148,11 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Mengapa Memilih Aksara Jawa?
+              Why Choose the Lontara Script?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Platform pembelajaran aksara Jawa yang dirancang khusus untuk
-              generasi digital dengan teknologi terdepan
+              A Lontara script learning platform specially designed for the
+              digital generation with cutting-edge technology
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -298,10 +179,13 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Apa Kata Mereka?
+              What Do They Say?{" "}
+              <span className="indonesiana-decorative text-amber-700">
+                ᨀᨈ ᨆᨙᨁᨑ?
+              </span>
             </h2>
             <p className="text-xl text-gray-600">
-              Ribuan pelajar sudah merasakan manfaatnya
+              Thousands of learners have already experienced the benefits
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -338,18 +222,18 @@ export default function LandingPage() {
       <section className="py-20 bg-gradient-to-r from-orange-500 to-yellow-500">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Siap Memulai Perjalanan Belajarmu?
+            Ready to Start Your Learning Journey?
           </h2>
           <p className="text-xl text-orange-100 mb-8">
-            Bergabunglah dengan ribuan pelajar lainnya dan kuasai aksara Jawa
-            hari ini juga!
+            Join thousands of other learners and master the Lontara script
+            today!
           </p>
           <Link href="/register">
             <Button
               size="lg"
               className="bg-white text-orange-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
-              Daftar Sekarang - Gratis!
+              Sign Up Now - Free!
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
@@ -372,24 +256,30 @@ export default function LandingPage() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-2xl">Nenek Nusantara</h1>
+                  <h1 className="text-2xl">
+                    Nenek Nusantara{" "}
+                    <span className="indonesiana-decorative text-amber-500">
+                      ᨊᨊᨙᨀᨛ ᨊᨘᨔᨊᨈᨑ
+                    </span>
+                  </h1>
                 </div>
               </div>
               <p className="text-gray-400 text-sm">
-                Platform pembelajaran aksara Jawa terdepan di Indonesia
+                Leading Lontara script learning platform in Indonesia
               </p>
             </div>
+
             <div>
-              <h4 className="font-bold mb-4">Produk</h4>
+              <h4 className="font-bold mb-4">Product</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
                   <Link href="/features" className="hover:text-white">
-                    Fitur
+                    Features
                   </Link>
                 </li>
                 <li>
                   <Link href="/pricing" className="hover:text-white">
-                    Harga
+                    Pricing
                   </Link>
                 </li>
                 <li>
@@ -399,17 +289,18 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
+
             <div>
-              <h4 className="font-bold mb-4">Dukungan</h4>
+              <h4 className="font-bold mb-4">Support</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
                   <Link href="/help" className="hover:text-white">
-                    Bantuan
+                    Help
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-white">
-                    Kontak
+                    Contact
                   </Link>
                 </li>
                 <li>
@@ -419,42 +310,40 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
+
             <div>
-              <h4 className="font-bold mb-4">Perusahaan</h4>
+              <h4 className="font-bold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
                   <Link href="/about" className="hover:text-white">
-                    Tentang
+                    About
                   </Link>
                 </li>
                 <li>
                   <Link href="/privacy" className="hover:text-white">
-                    Privasi
+                    Privacy
                   </Link>
                 </li>
                 <li>
                   <Link href="/terms" className="hover:text-white">
-                    Syarat
+                    Terms
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
+
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 Nenek Nusantara. Semua hak dilindungi.</p>
+            <p>
+              &copy; 2025 Nenek Nusantara{" "}
+              <span className="indonesiana-decorative text-amber-500">
+                ᨊᨊᨙᨀᨛ ᨊᨘᨔᨊᨈᨑ
+              </span>
+              . All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
     </div>
   );
 }
-
-// import { Hero } from "@/components/hero";
-
-// export default function HomePage() {
-//   return (
-//     <main className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
-//       <Hero />
-//     </main>
-//   );
-// }

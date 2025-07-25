@@ -74,7 +74,9 @@ export default function ModernNavbar({ user }: ModernNavbarProps) {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-800">Aksara Jawa</h1>
+              <h1 className="text-xl font-bold text-gray-800">
+                Aksara Lontara
+              </h1>
               <p className="text-xs text-gray-500 -mt-1">Learning Platform</p>
             </div>
           </Link>
@@ -133,22 +135,24 @@ export default function ModernNavbar({ user }: ModernNavbarProps) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80">
-                <div className="p-3 border-b">
-                  <h3 className="font-semibold">Notifikasi</h3>
+                <div className="p-3 border-b border-border">
+                  <h3 className="font-semibold">Notification</h3>
                 </div>
                 <DropdownMenuItem className="p-3">
                   <div>
-                    <p className="font-medium">Selamat! Streak 7 hari!</p>
-                    <p className="text-sm text-gray-500">
-                      Kamu berhasil belajar 7 hari berturut-turut
+                    <p className="font-medium">
+                      Congratulations! 7-Day Streak!
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      You have successfully studied for 7 consecutive days
                     </p>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-3">
                   <div>
-                    <p className="font-medium">Pelajaran baru tersedia</p>
-                    <p className="text-sm text-gray-500">
-                      Aksara Pa-Dha-Ja-Ya-Nya sudah bisa dipelajari
+                    <p className="font-medium">New Lesson Available</p>
+                    <p className="text-sm text-muted-foreground">
+                      Pa-Dha-Ja-Ya-Nya characters are now ready to learn
                     </p>
                   </div>
                 </DropdownMenuItem>
@@ -174,19 +178,19 @@ export default function ModernNavbar({ user }: ModernNavbarProps) {
                 <DropdownMenuItem asChild>
                   <Link href="/profile" className="cursor-pointer">
                     <User className="w-4 h-4 mr-2" />
-                    Profil
+                    Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/settings" className="cursor-pointer">
                     <Settings className="w-4 h-4 mr-2" />
-                    Pengaturan
+                    Settings
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/" className="cursor-pointer text-red-600">
                     <LogOut className="w-4 h-4 mr-2" />
-                    Keluar
+                    Logout
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
