@@ -46,8 +46,13 @@ export default function Settings() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Pengaturan</h1>
-            <p className="text-gray-600">Sesuaikan pengalaman belajarmu</p>
+            <h1 className="text-3xl font-bold text-gray-800">
+              Settings{" "}
+              <span className="indonesiana-decorative text-amber-600">
+                ᨔᨙᨈᨗᨃ
+              </span>
+            </h1>
+            <p className="text-gray-600">Customize your learning experience</p>
           </div>
         </div>
 
@@ -57,15 +62,16 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Bell className="w-5 h-5 text-orange-500" />
-                Notifikasi
+                Notifications{" "}
+                <span className="indonesiana-decorative">ᨊᨚᨈᨗᨈᨗᨊᨗᨔᨗ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium">Notifikasi Push</h3>
+                  <h3 className="font-medium">Push Notifications</h3>
                   <p className="text-sm text-gray-500">
-                    Terima notifikasi tentang pelajaran dan pencapaian
+                    Receive notifications about lessons and achievements
                   </p>
                 </div>
                 <Switch
@@ -75,9 +81,9 @@ export default function Settings() {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium">Pengingat Harian</h3>
+                  <h3 className="font-medium">Daily Reminder</h3>
                   <p className="text-sm text-gray-500">
-                    Ingatkan untuk belajar setiap hari
+                    Remind you to study every day
                   </p>
                 </div>
                 <Switch
@@ -86,16 +92,16 @@ export default function Settings() {
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="font-medium">Waktu Pengingat</h3>
+                <h3 className="font-medium">Reminder Time</h3>
                 <Select defaultValue="19:00">
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="08:00">08:00 - Pagi</SelectItem>
-                    <SelectItem value="12:00">12:00 - Siang</SelectItem>
-                    <SelectItem value="19:00">19:00 - Sore</SelectItem>
-                    <SelectItem value="21:00">21:00 - Malam</SelectItem>
+                    <SelectItem value="08:00">08:00 - Morning</SelectItem>
+                    <SelectItem value="12:00">12:00 - Noon</SelectItem>
+                    <SelectItem value="19:00">19:00 - Evening</SelectItem>
+                    <SelectItem value="21:00">21:00 - Night</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -107,15 +113,15 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Volume2 className="w-5 h-5 text-orange-500" />
-                Audio
+                Audio <span className="indonesiana-decorative">ᨕᨘᨉᨗᨕᨘ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium">Efek Suara</h3>
+                  <h3 className="font-medium">Sound Effects</h3>
                   <p className="text-sm text-gray-500">
-                    Suara untuk jawaban benar/salah
+                    Sounds for correct/incorrect answers
                   </p>
                 </div>
                 <Switch
@@ -142,21 +148,22 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Palette className="w-5 h-5 text-orange-500" />
-                Tampilan
+                Appearance{" "}
+                <span className="indonesiana-decorative">ᨕᨄᨗᨑᨕᨊᨈᨗ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <h3 className="font-medium">Tema Warna</h3>
+                <h3 className="font-medium">Theme Color</h3>
                 <Select value={theme} onValueChange={setTheme}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="orange">🧡 Orange (Default)</SelectItem>
-                    <SelectItem value="blue">💙 Biru</SelectItem>
-                    <SelectItem value="green">💚 Hijau</SelectItem>
-                    <SelectItem value="purple">💜 Ungu</SelectItem>
+                    <SelectItem value="blue">💙 Blue</SelectItem>
+                    <SelectItem value="green">💚 Green</SelectItem>
+                    <SelectItem value="purple">💜 Purple</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -168,19 +175,19 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Globe className="w-5 h-5 text-orange-500" />
-                Bahasa
+                Language <span className="indonesiana-decorative">ᨕᨒᨓᨘ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <h3 className="font-medium">Bahasa Interface</h3>
+                <h3 className="font-medium">Interface Language</h3>
                 <Select value={language} onValueChange={setLanguage}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="id">🇮🇩 Bahasa Indonesia</SelectItem>
-                    <SelectItem value="jv">🏛️ Bahasa Jawa</SelectItem>
+                    <SelectItem value="id">🇮🇩 Indonesian</SelectItem>
+                    <SelectItem value="jv">🏛️ Lontara</SelectItem>
                     <SelectItem value="en">🇺🇸 English</SelectItem>
                   </SelectContent>
                 </Select>
@@ -193,24 +200,25 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Shield className="w-5 h-5 text-orange-500" />
-                Privasi & Keamanan
+                Privacy & Security{" "}
+                <span className="indonesiana-decorative">ᨄᨑᨗᨓᨗᨔᨗ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium">Profil Publik</h3>
+                  <h3 className="font-medium">Public Profile</h3>
                   <p className="text-sm text-gray-500">
-                    Tampilkan profilmu di leaderboard
+                    Show your profile on leaderboard
                   </p>
                 </div>
                 <Switch defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium">Bagikan Progress</h3>
+                  <h3 className="font-medium">Share Progress</h3>
                   <p className="text-sm text-gray-500">
-                    Izinkan teman melihat progressmu
+                    Allow friends to see your progress
                   </p>
                 </div>
                 <Switch defaultChecked />
@@ -220,7 +228,7 @@ export default function Settings() {
                 className="w-full border-orange-300 text-orange-600 hover:bg-orange-50 bg-transparent"
               >
                 <Shield className="w-4 h-4 mr-2" />
-                Ubah Password
+                Change Password
               </Button>
             </CardContent>
           </Card>
@@ -230,7 +238,7 @@ export default function Settings() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <User className="w-5 h-5 text-orange-500" />
-                Akun
+                Account <span className="indonesiana-decorative">ᨕᨎᨈᨘ</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -239,20 +247,20 @@ export default function Settings() {
                 className="w-full border-orange-300 text-orange-600 hover:bg-orange-50 bg-transparent"
               >
                 <User className="w-4 h-4 mr-2" />
-                Edit Profil
+                Edit Profile
               </Button>
               <Button
                 variant="outline"
                 className="w-full border-gray-300 text-gray-600 hover:bg-gray-50 bg-transparent"
               >
-                Ekspor Data
+                Export Data
               </Button>
               <Button
                 variant="outline"
                 className="w-full border-red-300 text-red-600 hover:bg-red-50 bg-transparent"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
-                Hapus Akun
+                Delete Account
               </Button>
             </CardContent>
           </Card>
@@ -261,10 +269,10 @@ export default function Settings() {
           <Card className="border-orange-200">
             <CardContent className="p-6 text-center">
               <h3 className="font-bold text-lg text-gray-800 mb-2">
-                Aksara Jawa v1.0
+                Lontara Learning v1.0
               </h3>
               <p className="text-gray-600 mb-4">
-                Aplikasi pembelajaran aksara Jawa dengan NARA
+                Lontara script learning application with NARA
               </p>
               <div className="flex justify-center gap-4">
                 <Button
@@ -272,14 +280,14 @@ export default function Settings() {
                   size="sm"
                   className="border-orange-300 text-orange-600 hover:bg-orange-50 bg-transparent"
                 >
-                  Kebijakan Privasi
+                  Privacy Policy
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
                   className="border-orange-300 text-orange-600 hover:bg-orange-50 bg-transparent"
                 >
-                  Syarat & Ketentuan
+                  Terms & Conditions
                 </Button>
               </div>
             </CardContent>

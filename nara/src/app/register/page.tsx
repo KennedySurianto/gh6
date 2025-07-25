@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,13 +17,6 @@ import {
   User,
   Calendar,
 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -55,12 +47,12 @@ export default function RegisterPage() {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Password tidak cocok!");
+      setError("Passwords do not match!");
       return;
     }
 
     if (!agreeTerms) {
-      setError("Harap setujui syarat dan ketentuan!");
+      setError("Please agree to the Terms & Conditions!");
       return;
     }
 
@@ -97,7 +89,7 @@ export default function RegisterPage() {
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Kembali ke Beranda
+          Back to Home
         </Link>
 
         <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
@@ -112,11 +104,9 @@ export default function RegisterPage() {
               />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-800">
-              Bergabung dengan NARA!
+              Join NARA!
             </CardTitle>
-            <p className="text-gray-600">
-              Mulai perjalanan belajar aksara Jawa
-            </p>
+            <p className="text-gray-600">Start your Lontara learning journey</p>
           </CardHeader>
           <CardContent className="space-y-6">
             <form onSubmit={handleRegister} className="space-y-4">
@@ -129,14 +119,14 @@ export default function RegisterPage() {
               )}
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-gray-700">
-                  Nama Lengkap
+                  Full Name
                 </Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <Input
                     id="name"
                     type="text"
-                    placeholder="Masukkan nama lengkap"
+                    placeholder="Enter your full name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
@@ -154,7 +144,7 @@ export default function RegisterPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="nama@email.com"
+                    placeholder="name@email.com"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
@@ -193,7 +183,7 @@ export default function RegisterPage() {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Minimal 8 karakter"
+                    placeholder="At least 8 characters"
                     value={formData.password}
                     onChange={(e) =>
                       handleInputChange("password", e.target.value)
@@ -218,14 +208,14 @@ export default function RegisterPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-gray-700">
-                  Konfirmasi Password
+                  Confirm Password
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <Input
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Ulangi password"
+                    placeholder="Repeat password"
                     value={formData.confirmPassword}
                     onChange={(e) =>
                       handleInputChange("confirmPassword", e.target.value)
@@ -260,19 +250,19 @@ export default function RegisterPage() {
                   htmlFor="terms"
                   className="text-sm text-gray-600 leading-relaxed"
                 >
-                  Saya setuju dengan{" "}
+                  I agree to the{" "}
                   <Link
                     href="/terms"
                     className="text-orange-600 hover:text-orange-700"
                   >
-                    Syarat & Ketentuan
+                    Terms & Conditions
                   </Link>{" "}
-                  dan{" "}
+                  and{" "}
                   <Link
                     href="/privacy"
                     className="text-orange-600 hover:text-orange-700"
                   >
-                    Kebijakan Privasi
+                    Privacy Policy
                   </Link>
                 </Label>
               </div>
@@ -282,7 +272,7 @@ export default function RegisterPage() {
                 className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg"
                 disabled={isLoading}
               >
-                {isLoading ? "Mendaftar..." : "Daftar Sekarang"}
+                {isLoading ? "Registering..." : "Register Now"}
               </Button>
             </form>
 
@@ -291,7 +281,7 @@ export default function RegisterPage() {
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">atau</span>
+                <span className="px-2 bg-white text-gray-500">or</span>
               </div>
             </div>
 
@@ -318,18 +308,18 @@ export default function RegisterPage() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Daftar dengan Google
+                Register with Google
               </Button>
             </div>
 
             <div className="text-center">
               <p className="text-gray-600">
-                Sudah punya akun?{" "}
+                Already have an account?{" "}
                 <Link
                   href="/login"
                   className="text-orange-600 hover:text-orange-700 font-medium"
                 >
-                  Masuk di sini
+                  Login here
                 </Link>
               </p>
             </div>
