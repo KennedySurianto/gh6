@@ -7,10 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,17 +21,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState(""); // Pre-filled for easy testing
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
 
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
-    }, 2000);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,6 +72,13 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent className="space-y-6 pt-6">
             <form onSubmit={handleLogin} className="space-y-4">
+              {error && (
+                <Alert className="border-red-200 bg-red-50">
+                  <AlertDescription className="text-red-700">
+                    {error}
+                  </AlertDescription>
+                </Alert>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-gray-700">
                   Email
@@ -69,7 +88,7 @@ export default function LoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="nama@email.com"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
@@ -87,7 +106,7 @@ export default function LoginPage() {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Masukkan password"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 pr-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
@@ -117,14 +136,14 @@ export default function LoginPage() {
                     }
                   />
                   <Label htmlFor="remember" className="text-sm text-gray-600">
-                    Ingat saya
+                    Remember me
                   </Label>
                 </div>
                 <Link
                   href="/forgot-password"
                   className="text-sm text-orange-600 hover:text-orange-700"
                 >
-                  Lupa password?
+                  Forgot password
                 </Link>
               </div>
 
@@ -171,19 +190,6 @@ export default function LoginPage() {
                 </svg>
                 Masuk dengan Google
               </Button>
-              <Button
-                variant="outline"
-                className="w-full border-gray-200 hover:bg-gray-50 bg-transparent"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="#1877F2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-                Masuk dengan Facebook
-              </Button>
             </div>
 
             <div className="text-center">
@@ -196,27 +202,6 @@ export default function LoginPage() {
                   Daftar sekarang
                 </Link>
               </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="mt-6 bg-gradient-to-r from-orange-100 to-yellow-100 border-orange-200">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/mascot-nara.png"
-                alt="NARA"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <div>
-                <p className="text-sm text-gray-700">
-                  <strong>NARA:</strong> Selamat datang kembali! Aku sudah
-                  menunggu untuk melanjutkan petualangan belajar aksara Jawa
-                  bersamamu!
-                </p>
-              </div>
             </div>
           </CardContent>
         </Card>

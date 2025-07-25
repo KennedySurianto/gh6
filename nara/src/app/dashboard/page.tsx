@@ -3,13 +3,24 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Star, Lock, Play } from "lucide-react";
+import { Star, Lock, Play, Trophy, Flame, Zap } from "lucide-react";
 import Navbar from "@/navbar";
 
-const lessons = [
+// Define a specific type for a lesson object
+type Lesson = {
+  id: number;
+  title: string;
+  completed: boolean;
+  stars: number;
+  xp: number;
+  difficulty: "Mudah" | "Sedang" | "Sulit";
+  position: { x: number; y: number };
+};
+
+// Apply the type to the lessons array
+const lessons: Lesson[] = [
   {
     id: 1,
     title: "Aksara Dasar Ha-Na-Ca-Ra-Ka",
@@ -17,6 +28,7 @@ const lessons = [
     stars: 3,
     xp: 50,
     difficulty: "Mudah",
+    position: { x: 50, y: 85 },
   },
   {
     id: 2,
@@ -25,6 +37,7 @@ const lessons = [
     stars: 2,
     xp: 40,
     difficulty: "Mudah",
+    position: { x: 25, y: 70 },
   },
   {
     id: 3,
@@ -33,6 +46,7 @@ const lessons = [
     stars: 0,
     xp: 0,
     difficulty: "Sedang",
+    position: { x: 75, y: 55 },
   },
   {
     id: 4,
@@ -41,6 +55,7 @@ const lessons = [
     stars: 0,
     xp: 0,
     difficulty: "Sedang",
+    position: { x: 40, y: 40 },
   },
   {
     id: 5,
@@ -49,6 +64,7 @@ const lessons = [
     stars: 0,
     xp: 0,
     difficulty: "Sulit",
+    position: { x: 65, y: 25 },
   },
 ];
 
@@ -62,7 +78,6 @@ export default function Dashboard() {
   const progressPercent = (completedLessons / lessons.length) * 100;
 
   const handleLessonClick = (lessonId: number) => {
-    // Allow navigation to lesson 3 or any unlocked lesson
     const isUnlocked = lessonId <= completedLessons + 1 || lessonId === 3;
 
     if (isUnlocked) {
@@ -72,8 +87,13 @@ export default function Dashboard() {
     }
   };
 
+  // Use the 'Lesson' type for the lesson parameter
+  const isNextLesson = (index: number, lesson: Lesson) => {
+    return index === completedLessons || lesson.id === 3;
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
       <Navbar
         user={{
           name: "Kamu",
@@ -84,150 +104,163 @@ export default function Dashboard() {
         }}
       />
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">
-            Selamat datang kembali!
-          </h2>
-          <p className="text-muted-foreground mb-4">
-            Kamu sudah belajar {currentStreak} hari berturut-turut. Ayo
-            lanjutkan pelajaran berikutnya!
-          </p>
-          <div className="flex gap-2">
-            <Badge className="bg-orange-500 text-white">
-              Level {currentLevel}
-            </Badge>
-            <Badge
-              variant="outline"
-              className="border-orange-300 text-orange-700"
-            >
-              {completedLessons}/{lessons.length} Pelajaran Selesai
-            </Badge>
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full mb-4 shadow-lg">
+            <Trophy className="w-5 h-5" />
+            <span className="font-bold">Unit 1</span>
           </div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Belajar Aksara Jawa
+          </h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Mulai perjalanan belajarmu dengan aksara Jawa dasar. Selesaikan
+            setiap pelajaran untuk membuka level berikutnya!
+          </p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Flame className="w-8 h-8 mx-auto mb-2" />
+              <div className="text-2xl font-bold">{currentStreak}</div>
+              <div className="text-orange-100">Hari Berturut</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Zap className="w-8 h-8 mx-auto mb-2" />
+              <div className="text-2xl font-bold">{totalXP}</div>
+              <div className="text-blue-100">Total XP</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Trophy className="w-8 h-8 mx-auto mb-2" />
+              <div className="text-2xl font-bold">
+                {completedLessons}/{lessons.length}
+              </div>
+              <div className="text-green-100">Pelajaran Selesai</div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Progress Overview */}
-        <Card className="mb-8 shadow-sm">
+        <Card className="mb-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-foreground">
+              <h3 className="text-lg font-semibold text-gray-800">
                 Progress Belajar
               </h3>
-              <span className="text-sm text-muted-foreground">
+              <Badge className="bg-orange-500 text-white">
                 {Math.round(progressPercent)}% Selesai
-              </span>
+              </Badge>
             </div>
-            <Progress value={progressPercent} className="h-3" />
+            <Progress value={progressPercent} className="h-4 bg-gray-200" />
           </CardContent>
         </Card>
 
-        {/* Lessons */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-foreground">
-            Pelajaran Aksara Jawa
-          </h3>
+        {/* Lesson Path */}
+        <div className="relative">
+          <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-gray-50 overflow-hidden">
+            <CardContent className="p-8">
+              <div className="relative h-96 md:h-[500px]">
+                {/* Path SVG */}
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 50 85 Q 25 75 25 70 Q 25 65 75 55 Q 85 50 40 40 Q 30 35 65 25"
+                    stroke="#e5e7eb"
+                    strokeWidth="0.5"
+                    fill="none"
+                    strokeDasharray="2,2"
+                  />
+                </svg>
 
-          {lessons.map((lesson, index) => {
-            const isNextLesson = index === completedLessons || lesson.id === 3;
-            return (
-              <Card
-                key={lesson.id}
-                className={`cursor-pointer transition-all hover:shadow-md ${
-                  lesson.completed
-                    ? "border-green-200 bg-green-50"
-                    : isNextLesson
-                    ? "border-orange-300 bg-orange-50 shadow-md ring-2 ring-orange-200"
-                    : "border-border bg-muted opacity-60"
-                }`}
-                onClick={() => handleLessonClick(lesson.id)}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                {/* Lesson Nodes */}
+                {lessons.map((lesson, index) => {
+                  const isNext = isNextLesson(index, lesson);
+                  const isUnlocked = lesson.completed || isNext;
+
+                  return (
+                    <div
+                      key={lesson.id}
+                      className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
+                      style={{
+                        left: `${lesson.position.x}%`,
+                        top: `${lesson.position.y}%`,
+                      }}
+                      onClick={() => isUnlocked && handleLessonClick(lesson.id)}
+                    >
+                      {/* Lesson Node */}
                       <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center shadow-md ${
+                        className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 shadow-lg hover:scale-110 ${
                           lesson.completed
-                            ? "bg-green-500"
-                            : isNextLesson
-                            ? "bg-orange-500"
-                            : "bg-muted-foreground"
+                            ? "bg-gradient-to-br from-green-400 to-green-600 shadow-green-200"
+                            : isNext
+                            ? "bg-gradient-to-br from-orange-400 to-orange-600 shadow-orange-200 ring-4 ring-orange-200"
+                            : "bg-gradient-to-br from-gray-300 to-gray-500 shadow-gray-200"
                         }`}
                       >
                         {lesson.completed ? (
-                          <Star className="w-6 h-6 text-white fill-current" />
-                        ) : isNextLesson ? (
-                          <Play className="w-6 h-6 text-white" />
+                          <Star className="w-8 h-8 text-white fill-current" />
+                        ) : isNext ? (
+                          <Play className="w-8 h-8 text-white" />
                         ) : (
-                          <Lock className="w-6 h-6 text-white" />
+                          <Lock className="w-8 h-8 text-white" />
                         )}
                       </div>
-                      <div>
-                        <h3 className="font-bold text-foreground text-lg">
-                          {lesson.title}
-                        </h3>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge
-                            variant="outline"
-                            className={`text-xs ${
-                              lesson.difficulty === "Mudah"
-                                ? "border-green-300 text-green-700"
-                                : lesson.difficulty === "Sedang"
-                                ? "border-yellow-300 text-yellow-700"
-                                : "border-red-300 text-red-700"
-                            }`}
-                          >
-                            {lesson.difficulty}
-                          </Badge>
-                          {lesson.completed && (
-                            <>
-                              <div className="flex gap-1">
-                                {[...Array(3)].map((_, i) => (
-                                  <Star
-                                    key={i}
-                                    className={`w-4 h-4 ${
-                                      i < lesson.stars
-                                        ? "text-yellow-400 fill-current"
-                                        : "text-muted-foreground"
-                                    }`}
-                                  />
-                                ))}
-                              </div>
-                              <span className="text-sm text-green-600 font-medium">
+
+                      {/* Stars for completed lessons */}
+                      {lesson.completed && (
+                        <div className="absolute -top-2 -right-2 flex gap-1">
+                          {[...Array(lesson.stars)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="w-3 h-3 text-yellow-400 fill-current"
+                            />
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Tooltip */}
+                      <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                        <div className="bg-gray-800 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-lg">
+                          <div className="font-semibold">{lesson.title}</div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <Badge
+                              variant="outline"
+                              className={`text-xs border-white/30 text-white ${
+                                lesson.difficulty === "Mudah"
+                                  ? "bg-green-500/20"
+                                  : lesson.difficulty === "Sedang"
+                                  ? "bg-yellow-500/20"
+                                  : "bg-red-500/20"
+                              }`}
+                            >
+                              {lesson.difficulty}
+                            </Badge>
+                            {lesson.completed && (
+                              <span className="text-xs text-green-300">
                                 +{lesson.xp} XP
                               </span>
-                            </>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      {lesson.completed ? (
-                        <Button
-                          variant="outline"
-                          className="border-green-500 text-green-600 hover:bg-green-50 bg-transparent"
-                        >
-                          Ulangi
-                        </Button>
-                      ) : isNextLesson ? (
-                        <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                          Mulai
-                        </Button>
-                      ) : (
-                        <Button
-                          disabled
-                          variant="outline"
-                          className="opacity-50 bg-transparent"
-                        >
-                          Terkunci
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

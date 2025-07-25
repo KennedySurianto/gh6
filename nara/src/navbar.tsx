@@ -57,7 +57,7 @@ export default function Navbar({ user }: NavbarProps) {
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-foreground">NARA</h1>
               <p className="text-xs text-muted-foreground -mt-1">
-                Belajar Aksara Jawa
+                Nenek Nusantara
               </p>
             </div>
           </Link>

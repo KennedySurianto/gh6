@@ -1,13 +1,15 @@
 "use client";
 
 import type React from "react";
-
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Eye,
   EyeOff,
@@ -27,6 +29,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,11 +40,11 @@ export default function RegisterPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    age: "",
-    level: "",
+    birthdate: "",
   });
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleInputChange = (field: string, value: string) => {
@@ -49,28 +53,46 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Password tidak cocok!");
+      setError("Password tidak cocok!");
       return;
     }
+
     if (!agreeTerms) {
-      alert("Harap setujui syarat dan ketentuan!");
+      setError("Harap setujui syarat dan ketentuan!");
       return;
     }
 
     setIsLoading(true);
 
-    // Simulate registration process
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });
+
       router.push("/dashboard");
-    }, 2000);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Back Button */}
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6 transition-colors"
@@ -99,6 +121,13 @@ export default function RegisterPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <form onSubmit={handleRegister} className="space-y-4">
+              {error && (
+                <Alert className="border-red-200 bg-red-50">
+                  <AlertDescription className="text-red-700">
+                    {error}
+                  </AlertDescription>
+                </Alert>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-gray-700">
                   Nama Lengkap
@@ -135,41 +164,24 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="age" className="text-gray-700">
-                    Usia
+                  <Label htmlFor="birthdate" className="text-gray-700">
+                    Birthdate
                   </Label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
-                      id="age"
-                      type="number"
-                      placeholder="25"
-                      value={formData.age}
-                      onChange={(e) => handleInputChange("age", e.target.value)}
+                      id="birthdate"
+                      type="date"
+                      value={formData.birthdate}
+                      onChange={(e) =>
+                        handleInputChange("birthdate", e.target.value)
+                      }
                       className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
                       required
                     />
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="level" className="text-gray-700">
-                    Level
-                  </Label>
-                  <Select
-                    value={formData.level}
-                    onValueChange={(value) => handleInputChange("level", value)}
-                  >
-                    <SelectTrigger className="border-gray-200 focus:border-orange-400 focus:ring-orange-400">
-                      <SelectValue placeholder="Pilih level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="beginner">Pemula</SelectItem>
-                      <SelectItem value="intermediate">Menengah</SelectItem>
-                      <SelectItem value="advanced">Mahir</SelectItem>
-                    </SelectContent>
-                  </Select>
                 </div>
               </div>
 
@@ -309,19 +321,6 @@ export default function RegisterPage() {
                 </svg>
                 Daftar dengan Google
               </Button>
-              <Button
-                variant="outline"
-                className="w-full border-gray-200 hover:bg-gray-50 bg-transparent"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="#1877F2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-                Daftar dengan Facebook
-              </Button>
             </div>
 
             <div className="text-center">
@@ -334,28 +333,6 @@ export default function RegisterPage() {
                   Masuk di sini
                 </Link>
               </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* NARA Welcome Message */}
-        <Card className="mt-6 bg-gradient-to-r from-orange-100 to-yellow-100 border-orange-200">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/mascot-nara.png"
-                alt="NARA"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <div>
-                <p className="text-sm text-gray-700">
-                  <strong>NARA:</strong> Halo! Aku sangat senang kamu ingin
-                  belajar aksara Jawa bersamaku. Mari kita mulai petualangan
-                  yang menyenangkan!
-                </p>
-              </div>
             </div>
           </CardContent>
         </Card>
