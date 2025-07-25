@@ -6,6 +6,25 @@ import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { Loader2, Swords, Users } from "lucide-react";
 
+type BaseQuestion = {
+  question: string;
+  type: "multiple-choice" | "drawing";
+};
+
+type MultipleChoiceQuestion = BaseQuestion & {
+  type: "multiple-choice";
+  options: string[];
+  correct: string;
+};
+
+type DrawingQuestion = BaseQuestion & {
+  type: "drawing";
+  targetAksara: string;
+};
+
+type Question = MultipleChoiceQuestion | DrawingQuestion;
+
+
 // The initial, unshuffled quiz data
 const initialQuizData = {
   questions: [
@@ -46,6 +65,21 @@ const initialQuizData = {
   ],
 };
 
+type MemberInfo = {
+  name?: string; // or whatever info you're attaching
+};
+
+type PresenceMember = {
+  id: string;
+  info: MemberInfo;
+};
+
+type CurrentMembers = {
+  myID: string;
+  members: Record<string, MemberInfo>;
+};
+
+
 const shuffleArray = <T,>(array: T[]): T[] => {
   return [...array].sort(() => Math.random() - 0.5);
 };
@@ -53,8 +87,8 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 export default function LobbyPage() {
   const router = useRouter();
   const [status, setStatus] = useState("Connecting...");
-  const [members, setMembers] = useState<any[]>([]);
-  const [myId, setMyId] = useState<string | null>(null);
+const [members, setMembers] = useState<PresenceMember[]>([]);
+const [myId, setMyId] = useState<string | null>(null);
 
   useEffect(() => {
     const pusherInstance = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -64,7 +98,9 @@ export default function LobbyPage() {
 
     const channel = pusherInstance.subscribe("presence-aksara-duel");
 
-    channel.bind("pusher:subscription_succeeded", (currentMembers: any) => {
+  channel.bind(
+    "pusher:subscription_succeeded",
+    (currentMembers: CurrentMembers) => {
       setStatus("Waiting for opponent...");
       setMyId(currentMembers.myID);
       const memberArray = Object.keys(currentMembers.members).map((id) => ({
@@ -72,19 +108,17 @@ export default function LobbyPage() {
         info: currentMembers.members[id],
       }));
       setMembers(memberArray);
-    });
+    }
+  );
 
-    channel.bind("pusher:member_added", (member: any) => {
-      setMembers((prev) => [...prev, member]);
-    });
+  channel.bind("pusher:member_added", (member: PresenceMember) => {
+    setMembers((prev) => [...prev, member]);
+  });
 
-    channel.bind("pusher:member_removed", (member: any) => {
-      setMembers((prev) => prev.filter((m) => m.id !== member.id));
-    });
+  channel.bind("pusher:member_removed", (member: PresenceMember) => {
+    setMembers((prev) => prev.filter((m) => m.id !== member.id));
+  });
 
-    channel.bind("duel-starting", (data: { duelId: string }) => {
-      router.push(`/duel/${data.duelId}`);
-    });
 
     return () => {
       pusherInstance.unsubscribe("presence-aksara-duel");

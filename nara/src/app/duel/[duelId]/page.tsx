@@ -23,14 +23,35 @@ import Pusher from "pusher-js";
 
 const INITIAL_TIME = 120;
 
+type BaseQuestion = {
+  id: string;
+  question: string;
+  type: "multiple-choice" | "drawing";
+};
+
+type MultipleChoiceQuestion = BaseQuestion & {
+  type: "multiple-choice";
+  options: string[];
+  correct: string;
+};
+
+type DrawingQuestion = BaseQuestion & {
+  type: "drawing";
+  correct?: string; // if applicable
+};
+
+type Question = MultipleChoiceQuestion | DrawingQuestion;
+
+
 export default function DuelPage() {
   const params = useParams();
   const router = useRouter();
   const duelId = params.duelId as string;
 
-  const [quizData, setQuizData] = useState<{ questions: any[] }>({
+  const [quizData, setQuizData] = useState<{ questions: Question[] }>({
     questions: [],
   });
+
   const [gameState, setGameState] = useState<
     "connecting" | "countdown" | "playing" | "waiting_for_finish" | "finished"
   >("connecting");
@@ -210,6 +231,7 @@ export default function DuelPage() {
   };
 
   useEffect(() => {
+    if (totalQuestions === 0 || gameState !== "playing") return;
     if (timeLeft === 0) endGame();
     if (
       playerStats.progress >= totalQuestions &&
@@ -479,8 +501,7 @@ export default function DuelPage() {
                     className="h-2 [&>*]:bg-red-500"
                   />
                   <p className="text-sm text-gray-500 mt-2">
-                    Opponent's Progress: {opponentStats.progress}/
-                    {totalQuestions}
+                    {`Opponent's Progress: ${opponentStats.progress}/${totalQuestions}`}
                   </p>
                 </div>
               </CardContent>
