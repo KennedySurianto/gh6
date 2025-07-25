@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/lib/firebase";
+import useFirebaseUser from "@/hooks/useFirebaseUser";
 
 const profileData = {
   name: "Kamu",
@@ -68,6 +70,7 @@ const profileData = {
 };
 
 export default function Profile() {
+  const user = useFirebaseUser();
   const progressToNext = (profileData.xp / profileData.xpToNext) * 100;
 
   return (
@@ -112,7 +115,7 @@ export default function Profile() {
               </div>
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  {profileData.name}
+                  {user ? user.displayName : ""}
                 </h2>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center gap-2">

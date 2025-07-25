@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   Star,
   Users,
+  User,
   BookOpen,
   Trophy,
   ArrowRight,
@@ -16,6 +17,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/components/hero";
+import useFirebaseUser from "@/hooks/useFirebaseUser";
 
 const features = [
   {
@@ -67,6 +69,7 @@ const testimonials = [
 
 export default function LandingPage() {
   const [isVisible, setIsVisible] = useState(false);
+  const user = useFirebaseUser();
 
   useEffect(() => {
     setIsVisible(true);
@@ -95,20 +98,45 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/login">
-                <Button
-                  variant="ghost"
-                  className="text-gray-700 hover:text-orange-600 poppins-reguler"
-                >
-                  Masuk
-                </Button>
-              </Link>
-              <Link href="/register">
-                <Button className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg">
-                  Daftar Gratis
-                </Button>
-              </Link>
-            </div>
+              {user ? (
+                <>
+                  <Link href="/dashboard">
+                    <Button
+                      variant="ghost"
+                      className="text-gray-700 hover:text-orange-600 poppins-reguler flex items-center gap-2"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      Practice
+                    </Button>
+                  </Link>
+                  <Link href="/profile">
+                    <Button
+                      variant="ghost"
+                      className="text-gray-700 hover:text-orange-600 poppins-reguler flex items-center gap-2"
+                    >
+                      <User className="w-4 h-4" />
+                      Profile
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button
+                      variant="ghost"
+                      className="text-gray-700 hover:text-orange-600 poppins-reguler"
+                    >
+                      Masuk
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg">
+                      Daftar Gratis
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>  
           </div>
         </div>
       </nav>
