@@ -23,18 +23,18 @@ type PracticeMode = "selection" | "drawing" | "recognition" | "mixed";
 type Aksara = {
   aksara: string;
   name: string;
-  level: "Dasar" | "Menengah" | "Lanjutan";
+  level: "Basic" | "Intermediate" | "Advanced";
 };
 
 const aksaraList: Aksara[] = [
-  { aksara: "ꦲ", name: "Ha", level: "Dasar" },
-  { aksara: "ꦤ", name: "Na", level: "Dasar" },
-  { aksara: "ꦕ", name: "Ca", level: "Dasar" },
-  { aksara: "ꦫ", name: "Ra", level: "Dasar" },
-  { aksara: "ꦏ", name: "Ka", level: "Dasar" },
-  { aksara: "ꦢ", name: "Da", level: "Menengah" },
-  { aksara: "ꦠ", name: "Ta", level: "Menengah" },
-  { aksara: "ꦱ", name: "Sa", level: "Menengah" },
+  { aksara: "ᨕ", name: "A", level: "Basic" },
+  { aksara: "ᨎ", name: "Nya", level: "Basic" },
+  { aksara: "ᨀ", name: "Ka", level: "Basic" },
+  { aksara: "ᨁ", name: "Ga", level: "Basic" },
+  { aksara: "ᨂ", name: "Nga", level: "Basic" },
+  { aksara: "ᨄ", name: "Pa", level: "Intermediate" },
+  { aksara: "ᨅ", name: "Ba", level: "Intermediate" },
+  { aksara: "ᨈ", name: "Ta", level: "Intermediate" },
 ];
 
 export default function Practice() {
@@ -42,7 +42,6 @@ export default function Practice() {
   const [currentAksara, setCurrentAksara] = useState<Aksara | null>(null);
   const [score, setScore] = useState(0);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
-  const [isDrawing, setIsDrawing] = useState(false);
   const [recognitionOptions, setRecognitionOptions] = useState<Aksara[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -137,7 +136,6 @@ export default function Practice() {
     }
   };
 
-  // Canvas drawing functionality
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -328,9 +326,9 @@ export default function Practice() {
                       <Badge
                         variant="outline"
                         className={`text-xs mt-1 ${
-                          item.level === "Dasar"
+                          item.level === "Basic"
                             ? "border-green-300 text-green-700"
-                            : item.level === "Menengah"
+                            : item.level === "Intermediate"
                             ? "border-yellow-300 text-yellow-700"
                             : "border-red-300 text-red-700"
                         }`}
