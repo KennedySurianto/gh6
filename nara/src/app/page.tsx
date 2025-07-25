@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Hero } from "@/components/hero";
 
 const features = [
   {
@@ -88,15 +89,16 @@ export default function LandingPage() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800">Aksara Jawa</h1>
-                <p className="text-xs text-gray-500">dengan NARA</p>
+                <h1 className="text-xl font-bold text-gray-800">
+                  Nenek Nusantara
+                </h1>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <Link href="/login">
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:text-orange-600"
+                  className="text-gray-700 hover:text-orange-600 poppins-reguler"
                 >
                   Masuk
                 </Button>
@@ -112,7 +114,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      {/* <section className="relative py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div
@@ -228,7 +230,9 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+
+      <Hero />
 
       {/* Features Section */}
       <section className="py-20 bg-white/50">
@@ -340,8 +344,7 @@ export default function LandingPage() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">Aksara Jawa</h3>
-                  <p className="text-sm text-gray-400">dengan NARA</p>
+                  <h1 className="text-2xl">Nenek Nusantara</h1>
                 </div>
               </div>
               <p className="text-gray-400 text-sm">
@@ -410,10 +413,20 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 Aksara Jawa. Semua hak dilindungi.</p>
+            <p>&copy; 2024 Nenek Nusantara. Semua hak dilindungi.</p>
           </div>
         </div>
       </footer>
     </div>
   );
 }
+
+// import { Hero } from "@/components/hero";
+
+// export default function HomePage() {
+//   return (
+//     <main className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
+//       <Hero />
+//     </main>
+//   );
+// }
