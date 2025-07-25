@@ -46,7 +46,7 @@ const leaderboardData = [
   },
   {
     rank: 4,
-    name: "Kamu",
+    name: "You",
     xp: 450,
     avatar: "🧑",
     streak: 7,
@@ -92,23 +92,22 @@ const leaderboardData = [
 ];
 
 const categories = [
-  { id: "all", label: "Semua Waktu", active: true },
-  { id: "weekly", label: "Mingguan", active: false },
-  { id: "monthly", label: "Bulanan", active: false },
+  { id: "all", label: "All Time", active: true },
+  { id: "weekly", label: "Weekly", active: false },
+  { id: "monthly", label: "Monthly", active: false },
 ];
 
-
 export default function Leaderboard() {
-  const currentUser = leaderboardData.find((user) => user.name === "Kamu");
-    const [currentStreak] = useState(7);
-    const [totalXP] = useState(450);
-    const [currentLevel] = useState(3);
+  const currentUser = leaderboardData.find((user) => user.name === "You");
+  const [currentStreak] = useState(7);
+  const [totalXP] = useState(450);
+  const [currentLevel] = useState(3);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-yellow-50 to-orange-50">
       <Navbar
         user={{
-          name: "Kamu",
+          name: "You",
           level: currentLevel,
           xp: totalXP,
           streak: currentStreak,
@@ -125,11 +124,9 @@ export default function Leaderboard() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">
-              Papan Peringkat
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-800">Leaderboard</h1>
             <p className="text-gray-600">
-              Lihat posisimu di antara pelajar lain
+              See your position among other learners
             </p>
           </div>
         </div>
@@ -159,7 +156,7 @@ export default function Leaderboard() {
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800 flex items-center gap-2">
                   <Crown className="w-6 h-6 text-yellow-500" />
-                  Top 3 Pelajar
+                  Top 3 Learners
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -214,16 +211,16 @@ export default function Leaderboard() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800">
-                  Semua Peringkat
+                  All Ranks
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="space-y-0">
-                  {leaderboardData.map((user, index) => (
+                  {leaderboardData.map((user) => (
                     <div
                       key={user.rank}
                       className={`flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0 transition-colors ${
-                        user.name === "Kamu"
+                        user.name === "You"
                           ? "bg-gradient-to-r from-orange-50 to-yellow-50 border-orange-200"
                           : "hover:bg-gray-50"
                       }`}
@@ -246,7 +243,7 @@ export default function Leaderboard() {
                         <div>
                           <h3
                             className={`font-semibold ${
-                              user.name === "Kamu"
+                              user.name === "You"
                                 ? "text-orange-700"
                                 : "text-gray-800"
                             }`}
@@ -257,13 +254,13 @@ export default function Leaderboard() {
                             <div className="flex items-center gap-1">
                               <Flame className="w-3 h-3 text-red-500" />
                               <span className="text-xs text-gray-600">
-                                {user.streak} hari
+                                {user.streak} days
                               </span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Star className="w-3 h-3 text-yellow-500" />
                               <span className="text-xs text-gray-600">
-                                +{user.weeklyXP} minggu ini
+                                +{user.weeklyXP} this week
                               </span>
                             </div>
                           </div>
@@ -291,7 +288,7 @@ export default function Leaderboard() {
               <CardContent className="p-6">
                 <div className="text-center">
                   <h3 className="font-bold text-lg text-orange-800 mb-2">
-                    Peringkatmu
+                    Your Rank
                   </h3>
                   <div className="text-4xl font-bold text-orange-600 mb-2">
                     #{currentUser?.rank}
@@ -309,25 +306,25 @@ export default function Leaderboard() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-lg text-gray-800">
-                  Progress Mingguan
+                  Weekly Progress
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 text-sm">XP Minggu Ini</span>
+                    <span className="text-gray-600 text-sm">XP This Week</span>
                     <span className="font-bold text-green-600">
                       +{currentUser?.weeklyXP}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 text-sm">
-                      Posisi Minggu Lalu
+                      Last Week Position
                     </span>
                     <span className="font-bold text-blue-600">#5</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 text-sm">Perubahan</span>
+                    <span className="text-gray-600 text-sm">Change</span>
                     <Badge className="bg-green-500 text-white text-xs">
                       ↑ +1
                     </Badge>
@@ -340,7 +337,7 @@ export default function Leaderboard() {
             <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-50 to-pink-50">
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg text-purple-800 mb-4">
-                  Pencapaian Terbaru
+                  Latest Achievements
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 p-2 bg-white rounded-lg">
@@ -348,7 +345,7 @@ export default function Leaderboard() {
                     <div>
                       <p className="font-semibold text-sm">Top 5 Player</p>
                       <p className="text-xs text-gray-500">
-                        Masuk 5 besar leaderboard
+                        Reached top 5 in leaderboard
                       </p>
                     </div>
                   </div>
@@ -357,7 +354,7 @@ export default function Leaderboard() {
                     <div>
                       <p className="font-semibold text-sm">Streak Master</p>
                       <p className="text-xs text-gray-500">
-                        7 hari berturut-turut
+                        7 days in a row
                       </p>
                     </div>
                   </div>
@@ -367,7 +364,7 @@ export default function Leaderboard() {
                     variant="outline"
                     className="w-full mt-4 bg-transparent"
                   >
-                    Lihat Semua
+                    View All
                   </Button>
                 </Link>
               </CardContent>
@@ -377,19 +374,19 @@ export default function Leaderboard() {
             <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-cyan-50">
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg text-blue-800 mb-4">
-                  Kompetisi Bulanan
+                  Monthly Competition
                 </h3>
                 <div className="text-center mb-4">
                   <div className="text-2xl font-bold text-blue-600">
-                    12 Hari
+                    12 Days
                   </div>
-                  <p className="text-blue-700 text-sm">tersisa</p>
+                  <p className="text-blue-700 text-sm">remaining</p>
                 </div>
                 <p className="text-blue-700 text-sm mb-4">
-                  Raih XP sebanyak-banyaknya untuk memenangkan hadiah menarik!
+                  Earn as much XP as possible to win exciting prizes!
                 </p>
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500">
-                  Ikut Kompetisi
+                  Join Competition
                 </Button>
               </CardContent>
             </Card>

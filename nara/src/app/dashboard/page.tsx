@@ -8,62 +8,60 @@ import { Badge } from "@/components/ui/badge";
 import { Star, Lock, Play, Trophy, Flame, Zap } from "lucide-react";
 import Navbar from "@/navbar";
 
-// Define a specific type for a lesson object
 type Lesson = {
   id: number;
   title: string;
   completed: boolean;
   stars: number;
   xp: number;
-  difficulty: "Mudah" | "Sedang" | "Sulit";
+  difficulty: "Easy" | "Medium" | "Hard";
   position: { x: number; y: number };
 };
 
-// Apply the type to the lessons array
 const lessons: Lesson[] = [
   {
     id: 1,
-    title: "Aksara Dasar Ha-Na-Ca-Ra-Ka",
+    title: "Basic Script Ha-Na-Ca-Ra-Ka",
     completed: true,
     stars: 3,
     xp: 50,
-    difficulty: "Mudah",
+    difficulty: "Easy",
     position: { x: 50, y: 85 },
   },
   {
     id: 2,
-    title: "Aksara Da-Ta-Sa-Wa-La",
+    title: "Script Da-Ta-Sa-Wa-La",
     completed: true,
     stars: 2,
     xp: 40,
-    difficulty: "Mudah",
+    difficulty: "Easy",
     position: { x: 25, y: 70 },
   },
   {
     id: 3,
-    title: "Aksara Pa-Dha-Ja-Ya-Nya",
+    title: "Lontara Script: Ka-Ga-Nga-Pa-Nya",
     completed: false,
     stars: 0,
     xp: 0,
-    difficulty: "Sedang",
+    difficulty: "Medium",
     position: { x: 75, y: 55 },
   },
   {
     id: 4,
-    title: "Aksara Ma-Ga-Ba-Tha-Nga",
+    title: "Script Ma-Ga-Ba-Tha-Nga",
     completed: false,
     stars: 0,
     xp: 0,
-    difficulty: "Sedang",
+    difficulty: "Medium",
     position: { x: 40, y: 40 },
   },
   {
     id: 5,
-    title: "Sandhangan Swara",
+    title: "Vowel Sandhangan",
     completed: false,
     stars: 0,
     xp: 0,
-    difficulty: "Sulit",
+    difficulty: "Hard",
     position: { x: 65, y: 25 },
   },
 ];
@@ -83,11 +81,10 @@ export default function Dashboard() {
     if (isUnlocked) {
       router.push(`/lesson/${lessonId}`);
     } else {
-      alert("Selesaikan pelajaran sebelumnya dulu ya!");
+      alert("Complete the previous lesson first!");
     }
   };
 
-  // Use the 'Lesson' type for the lesson parameter
   const isNextLesson = (index: number, lesson: Lesson) => {
     return index === completedLessons || lesson.id === 3;
   };
@@ -96,7 +93,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
       <Navbar
         user={{
-          name: "Kamu",
+          name: "You",
           level: currentLevel,
           xp: totalXP,
           streak: currentStreak,
@@ -111,11 +108,9 @@ export default function Dashboard() {
             <Trophy className="w-5 h-5" />
             <span className="font-bold">Unit 1</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Learn Now
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Learn Now</h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Start your Journey with Nara, the Aksara Lontara Learning Platform.
+            Start your journey with Nara, the Aksara Lontara learning platform.
             Explore the basics of Aksara Lontara and unlock your potential.
           </p>
         </div>
@@ -238,9 +233,9 @@ export default function Dashboard() {
                             <Badge
                               variant="outline"
                               className={`text-xs border-white/30 text-white ${
-                                lesson.difficulty === "Mudah"
+                                lesson.difficulty === "Easy"
                                   ? "bg-green-500/20"
-                                  : lesson.difficulty === "Sedang"
+                                  : lesson.difficulty === "Medium"
                                   ? "bg-yellow-500/20"
                                   : "bg-red-500/20"
                               }`}

@@ -12,14 +12,14 @@ import Navbar from "@/navbar";
 const achievementCategories = [
   {
     id: "learning",
-    title: "Pembelajaran",
+    title: "Learning",
     icon: <BookOpen className="w-5 h-5" />,
     color: "blue",
     achievements: [
       {
         id: 1,
-        title: "Langkah Pertama",
-        description: "Selesaikan pelajaran pertama",
+        title: "First Step",
+        description: "Complete the first lesson",
         progress: 100,
         target: 1,
         earned: true,
@@ -28,8 +28,8 @@ const achievementCategories = [
       },
       {
         id: 2,
-        title: "Penjelajah",
-        description: "Buka 5 pelajaran",
+        title: "Explorer",
+        description: "Open 5 lessons",
         progress: 60,
         target: 5,
         earned: false,
@@ -38,8 +38,8 @@ const achievementCategories = [
       },
       {
         id: 3,
-        title: "Ahli Aksara",
-        description: "Selesaikan 10 pelajaran",
+        title: "Script Expert",
+        description: "Complete 10 lessons",
         progress: 20,
         target: 10,
         earned: false,
@@ -48,8 +48,8 @@ const achievementCategories = [
       },
       {
         id: 4,
-        title: "Master Jawa",
-        description: "Selesaikan semua pelajaran",
+        title: "Lontara Master",
+        description: "Complete all lessons",
         progress: 10,
         target: 25,
         earned: false,
@@ -60,14 +60,14 @@ const achievementCategories = [
   },
   {
     id: "consistency",
-    title: "Konsistensi",
+    title: "Consistency",
     icon: <Flame className="w-5 h-5" />,
     color: "red",
     achievements: [
       {
         id: 5,
-        title: "Konsisten",
-        description: "Belajar 7 hari berturut-turut",
+        title: "Consistent",
+        description: "Study 7 days in a row",
         progress: 100,
         target: 7,
         earned: true,
@@ -76,8 +76,8 @@ const achievementCategories = [
       },
       {
         id: 6,
-        title: "Dedikasi",
-        description: "Belajar 30 hari berturut-turut",
+        title: "Dedication",
+        description: "Study 30 days in a row",
         progress: 23,
         target: 30,
         earned: false,
@@ -86,8 +86,8 @@ const achievementCategories = [
       },
       {
         id: 7,
-        title: "Legenda",
-        description: "Belajar 100 hari berturut-turut",
+        title: "Legend",
+        description: "Study 100 days in a row",
         progress: 7,
         target: 100,
         earned: false,
@@ -98,14 +98,14 @@ const achievementCategories = [
   },
   {
     id: "mastery",
-    title: "Penguasaan",
+    title: "Mastery",
     icon: <Star className="w-5 h-5" />,
     color: "yellow",
     achievements: [
       {
         id: 8,
-        title: "Bintang Terang",
-        description: "Dapatkan 3 bintang di 5 pelajaran",
+        title: "Shining Star",
+        description: "Earn 3 stars in 5 lessons",
         progress: 40,
         target: 5,
         earned: false,
@@ -114,8 +114,8 @@ const achievementCategories = [
       },
       {
         id: 9,
-        title: "Sempurna",
-        description: "Dapatkan 100% akurasi di 3 pelajaran",
+        title: "Perfect",
+        description: "Get 100% accuracy in 3 lessons",
         progress: 0,
         target: 3,
         earned: false,
@@ -124,8 +124,8 @@ const achievementCategories = [
       },
       {
         id: 10,
-        title: "Seniman Aksara",
-        description: "Gambar 50 aksara dengan benar",
+        title: "Script Artist",
+        description: "Correctly draw 50 scripts",
         progress: 60,
         target: 50,
         earned: false,
@@ -136,14 +136,14 @@ const achievementCategories = [
   },
   {
     id: "social",
-    title: "Sosial",
+    title: "Social",
     icon: <Trophy className="w-5 h-5" />,
     color: "purple",
     achievements: [
       {
         id: 11,
-        title: "Kompetitif",
-        description: "Masuk top 10 leaderboard",
+        title: "Competitive",
+        description: "Reach top 10 leaderboard",
         progress: 100,
         target: 1,
         earned: true,
@@ -152,8 +152,8 @@ const achievementCategories = [
       },
       {
         id: 12,
-        title: "Inspirator",
-        description: "Ajak 3 teman bergabung",
+        title: "Inspirer",
+        description: "Invite 3 friends to join",
         progress: 0,
         target: 3,
         earned: false,
@@ -163,7 +163,7 @@ const achievementCategories = [
       {
         id: 13,
         title: "Mentor",
-        description: "Bantu 5 teman menyelesaikan pelajaran",
+        description: "Help 5 friends complete lessons",
         progress: 0,
         target: 5,
         earned: false,
@@ -221,9 +221,9 @@ export default function Achievements() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Pencapaian</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Achievements</h1>
             <p className="text-gray-600">
-              Lihat semua pencapaianmu dalam belajar aksara Jawa
+              See all your achievements in learning Lontara script
             </p>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default function Achievements() {
                 {earnedAchievements}
               </div>
               <div className="text-sm text-gray-600">
-                dari {totalAchievements} pencapaian
+                out of {totalAchievements} achievements
               </div>
             </CardContent>
           </Card>
@@ -247,7 +247,7 @@ export default function Achievements() {
               <div className="text-3xl font-bold text-green-600 mb-1">
                 {totalXP}
               </div>
-              <div className="text-sm text-gray-600">XP dari pencapaian</div>
+              <div className="text-sm text-gray-600">XP from achievements</div>
             </CardContent>
           </Card>
           <Card className="border-purple-200 bg-gradient-to-r from-purple-100 to-pink-100">
@@ -256,7 +256,7 @@ export default function Achievements() {
               <div className="text-3xl font-bold text-purple-600 mb-1">
                 {Math.round((earnedAchievements / totalAchievements) * 100)}%
               </div>
-              <div className="text-sm text-gray-600">tingkat penyelesaian</div>
+              <div className="text-sm text-gray-600">completion rate</div>
             </CardContent>
           </Card>
         </div>
@@ -367,12 +367,12 @@ export default function Achievements() {
               />
               <div>
                 <h3 className="font-bold text-lg text-gray-800">
-                  Pesan dari NARA
+                  Message from NARA
                 </h3>
                 <p className="text-gray-700">
-                  Wah, kamu sudah meraih {earnedAchievements} pencapaian! Terus
-                  semangat belajar ya. Setiap pencapaian adalah bukti dedikasi
-                  dan kerja kerasmu dalam menguasai aksara Jawa!
+                  Wow, you have achieved {earnedAchievements} achievements! Keep
+                  up the spirit of learning. Every achievement is proof of your
+                  dedication and hard work in mastering the Lontara script!
                 </p>
               </div>
             </div>

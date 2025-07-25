@@ -142,7 +142,6 @@ export function Hero() {
                 >
                   nenek nusantara
                 </p>
-                {/* Javanese script subtitle with better contrast */}
                 <p
                   className="text-xl font-medium mt-2 text-amber-200 drop-shadow-lg indonesiana-decorative"
                   style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}
