@@ -13,7 +13,8 @@ import {
   Star,
 } from "lucide-react";
 import Link from "next/link";
-import ModernNavbar from "@/modern-navbar";
+import Navbar from "@/navbar";
+import { useState } from "react";
 
 const leaderboardData = [
   {
@@ -63,7 +64,7 @@ const leaderboardData = [
   },
   {
     rank: 6,
-    name: "Rudi Hartono",
+    name: "Angel",
     xp: 320,
     avatar: "👨‍🦱",
     streak: 3,
@@ -72,7 +73,7 @@ const leaderboardData = [
   },
   {
     rank: 7,
-    name: "Maya Sari",
+    name: "Matthew",
     xp: 280,
     avatar: "👩‍🦰",
     streak: 4,
@@ -81,7 +82,7 @@ const leaderboardData = [
   },
   {
     rank: 8,
-    name: "Joko Widodo",
+    name: "Jeki",
     xp: 150,
     avatar: "👴",
     streak: 2,
@@ -96,12 +97,24 @@ const categories = [
   { id: "monthly", label: "Bulanan", active: false },
 ];
 
+
 export default function Leaderboard() {
   const currentUser = leaderboardData.find((user) => user.name === "Kamu");
+    const [currentStreak] = useState(7);
+    const [totalXP] = useState(450);
+    const [currentLevel] = useState(3);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-yellow-50 to-orange-50">
-      <ModernNavbar />
+      <Navbar
+        user={{
+          name: "Kamu",
+          level: currentLevel,
+          xp: totalXP,
+          streak: currentStreak,
+          notifications: 2,
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}

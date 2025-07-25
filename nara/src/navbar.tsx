@@ -12,6 +12,7 @@ import {
 import { Bell, Settings, User, Trophy, Flame, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import useFirebaseUser from "./hooks/useFirebaseUser";
 
 interface NavbarProps {
   user?: {
@@ -25,16 +26,17 @@ interface NavbarProps {
 
 export default function Navbar({ user }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const userFirebase = useFirebaseUser(); // Assuming you have a hook to get the current user
 
   const defaultUser = {
-    name: "Kamu",
+    name: userFirebase?.displayName,
     level: 3,
     xp: 450,
     streak: 7,
     notifications: 2,
   };
 
-  const currentUser = user || defaultUser;
+  const currentUser = defaultUser;
 
   return (
     <nav className="bg-white shadow-md border-b border-border sticky top-0 z-50">
@@ -80,6 +82,14 @@ export default function Navbar({ user }: NavbarProps) {
                   className="text-muted-foreground hover:text-orange-600 hover:bg-orange-50"
                 >
                   Latihan
+                </Button>
+              </Link>
+              <Link href="/matchmaking">
+                <Button
+                  variant="ghost"
+                  className="text-muted-foreground hover:text-orange-600 hover:bg-orange-50"
+                >
+                  Matchmaking
                 </Button>
               </Link>
               <Link href="/leaderboard">
