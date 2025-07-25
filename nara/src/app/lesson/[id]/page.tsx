@@ -25,7 +25,7 @@ const lessonData = {
     { char: "ᨀ", name: "Ka", sound: "ka" },
     { char: "ᨂ", name: "Nga", sound: "nga" },
     { char: "ᨄ", name: "Pa", sound: "pa" },
-    { char: "ᨅ", name: "Ba", sound: "ba" },
+    { char: "ᨎ", name: "Nya", sound: "nya" },
   ],
   questions: [
     {
@@ -35,6 +35,12 @@ const lessonData = {
       correct: 1,
       explanation:
         "The character ᨁ (Ga) is the basic character for the 'ga' sound in the Lontara script.",
+    },
+    {
+      type: "drawing",
+      question: "Draw the character 'NYA' (ᨎ)",
+      targetAksara: "nya",
+      explanation: "The character ᨎ (Nya) has a similar shape to a bird.",
     },
     {
       type: "drawing",
@@ -58,13 +64,6 @@ const lessonData = {
       correct: 2,
       explanation:
         "The character ᨄ (Pa) is the character for the 'pa' sound in the Lontara script.",
-    },
-    {
-      type: "drawing",
-      question: "Draw the character 'BA' (ᨅ)",
-      targetAksara: "ᨅ",
-      explanation:
-        "The character ᨅ (Ba) has a similar shape to Pa but with an additional dot.",
     },
   ],
 };
