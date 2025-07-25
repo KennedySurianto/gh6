@@ -1,30 +1,66 @@
 "use client";
 
 import type React from "react";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  ArrowLeft,
+  Mail,
+  Lock,
+  User,
+  Calendar,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState(""); // Pre-filled for easy testing
-  const [password, setPassword] = useState(""); // Pre-filled for easy testing
-  const [rememberMe, setRememberMe] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    age: "",
+    level: "",
+  });
+  const [agreeTerms, setAgreeTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Password tidak cocok!");
+      return;
+    }
+    if (!agreeTerms) {
+      alert("Harap setujui syarat dan ketentuan!");
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate login process
+    // Simulate registration process
     setTimeout(() => {
       setIsLoading(false);
       router.push("/dashboard");
@@ -34,6 +70,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* Back Button */}
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6 transition-colors"
@@ -54,12 +91,32 @@ export default function LoginPage() {
               />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-800">
-              Selamat Datang Kembali!
+              Bergabung dengan NARA!
             </CardTitle>
-            <p className="text-gray-600">Masuk ke akun Aksara Jawa kamu</p>
+            <p className="text-gray-600">
+              Mulai perjalanan belajar aksara Jawa
+            </p>
           </CardHeader>
-          <CardContent className="space-y-6 pt-6">
-            <form onSubmit={handleLogin} className="space-y-4">
+          <CardContent className="space-y-6">
+            <form onSubmit={handleRegister} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-gray-700">
+                  Nama Lengkap
+                </Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Masukkan nama lengkap"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
+                    required
+                  />
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-gray-700">
                   Email
@@ -70,11 +127,49 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     placeholder="nama@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
                     required
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="age" className="text-gray-700">
+                    Usia
+                  </Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Input
+                      id="age"
+                      type="number"
+                      placeholder="25"
+                      value={formData.age}
+                      onChange={(e) => handleInputChange("age", e.target.value)}
+                      className="pl-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="level" className="text-gray-700">
+                    Level
+                  </Label>
+                  <Select
+                    value={formData.level}
+                    onValueChange={(value) => handleInputChange("level", value)}
+                  >
+                    <SelectTrigger className="border-gray-200 focus:border-orange-400 focus:ring-orange-400">
+                      <SelectValue placeholder="Pilih level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="beginner">Pemula</SelectItem>
+                      <SelectItem value="intermediate">Menengah</SelectItem>
+                      <SelectItem value="advanced">Mahir</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -87,11 +182,14 @@ export default function LoginPage() {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Masukkan password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Minimal 8 karakter"
+                    value={formData.password}
+                    onChange={(e) =>
+                      handleInputChange("password", e.target.value)
+                    }
                     className="pl-10 pr-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
                     required
+                    minLength={8}
                   />
                   <button
                     type="button"
@@ -107,25 +205,65 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="remember"
-                    checked={rememberMe}
-                    onCheckedChange={(checked) =>
-                      setRememberMe(checked as boolean)
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-gray-700">
+                  Konfirmasi Password
+                </Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Ulangi password"
+                    value={formData.confirmPassword}
+                    onChange={(e) =>
+                      handleInputChange("confirmPassword", e.target.value)
                     }
+                    className="pl-10 pr-10 border-gray-200 focus:border-orange-400 focus:ring-orange-400"
+                    required
                   />
-                  <Label htmlFor="remember" className="text-sm text-gray-600">
-                    Ingat saya
-                  </Label>
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
                 </div>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-orange-600 hover:text-orange-700"
+              </div>
+
+              <div className="flex items-start space-x-2">
+                <Checkbox
+                  id="terms"
+                  checked={agreeTerms}
+                  onCheckedChange={(checked) =>
+                    setAgreeTerms(checked as boolean)
+                  }
+                  className="mt-1"
+                />
+                <Label
+                  htmlFor="terms"
+                  className="text-sm text-gray-600 leading-relaxed"
                 >
-                  Lupa password?
-                </Link>
+                  Saya setuju dengan{" "}
+                  <Link
+                    href="/terms"
+                    className="text-orange-600 hover:text-orange-700"
+                  >
+                    Syarat & Ketentuan
+                  </Link>{" "}
+                  dan{" "}
+                  <Link
+                    href="/privacy"
+                    className="text-orange-600 hover:text-orange-700"
+                  >
+                    Kebijakan Privasi
+                  </Link>
+                </Label>
               </div>
 
               <Button
@@ -133,7 +271,7 @@ export default function LoginPage() {
                 className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg"
                 disabled={isLoading}
               >
-                {isLoading ? "Masuk..." : "Masuk"}
+                {isLoading ? "Mendaftar..." : "Daftar Sekarang"}
               </Button>
             </form>
 
@@ -169,11 +307,11 @@ export default function LoginPage() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Masuk dengan Google
+                Daftar dengan Google
               </Button>
               <Button
                 variant="outline"
-                className="w unr-full border-gray-200 hover:bg-gray-50 bg-transparent"
+                className="w-full border-gray-200 hover:bg-gray-50 bg-transparent"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -182,24 +320,25 @@ export default function LoginPage() {
                 >
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
-                Masuk dengan Facebook
+                Daftar dengan Facebook
               </Button>
             </div>
 
             <div className="text-center">
               <p className="text-gray-600">
-                Belum punya akun?{" "}
+                Sudah punya akun?{" "}
                 <Link
-                  href="/register"
+                  href="/login"
                   className="text-orange-600 hover:text-orange-700 font-medium"
                 >
-                  Daftar sekarang
+                  Masuk di sini
                 </Link>
               </p>
             </div>
           </CardContent>
         </Card>
 
+        {/* NARA Welcome Message */}
         <Card className="mt-6 bg-gradient-to-r from-orange-100 to-yellow-100 border-orange-200">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -212,9 +351,9 @@ export default function LoginPage() {
               />
               <div>
                 <p className="text-sm text-gray-700">
-                  <strong>NARA:</strong> Selamat datang kembali! Aku sudah
-                  menunggu untuk melanjutkan petualangan belajar aksara Jawa
-                  bersamamu!
+                  <strong>NARA:</strong> Halo! Aku sangat senang kamu ingin
+                  belajar aksara Jawa bersamaku. Mari kita mulai petualangan
+                  yang menyenangkan!
                 </p>
               </div>
             </div>
