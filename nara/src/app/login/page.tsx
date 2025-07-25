@@ -17,8 +17,8 @@ import { auth } from "@/lib/firebase";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState(""); // Pre-filled for easy testing
-  const [password, setPassword] = useState(""); // Pre-filled for easy testing
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -50,7 +50,7 @@ export default function LoginPage() {
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Kembali ke Beranda
+          Back to Home
         </Link>
 
         <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
@@ -65,9 +65,9 @@ export default function LoginPage() {
               />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-800">
-              Selamat Datang Kembali!
+              Welcome Back!
             </CardTitle>
-            <p className="text-gray-600">Masuk ke akun Aksara Jawa kamu</p>
+            <p className="text-gray-600">Login to Yout NARA Account</p>
           </CardHeader>
           <CardContent className="space-y-6 pt-6">
             <form onSubmit={handleLogin} className="space-y-4">
@@ -151,7 +151,7 @@ export default function LoginPage() {
                 className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white shadow-lg"
                 disabled={isLoading}
               >
-                {isLoading ? "Masuk..." : "Masuk"}
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
 
@@ -160,7 +160,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">atau</span>
+                <span className="px-2 bg-white text-gray-500">or</span>
               </div>
             </div>
 
@@ -187,18 +187,18 @@ export default function LoginPage() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Masuk dengan Google
+                Login with Google
               </Button>
             </div>
 
             <div className="text-center">
               <p className="text-gray-600">
-                Belum punya akun?{" "}
+                Don't have an account?{" "}
                 <Link
                   href="/register"
                   className="text-orange-600 hover:text-orange-700 font-medium"
                 >
-                  Daftar sekarang
+                  Sign up now
                 </Link>
               </p>
             </div>
