@@ -39,10 +39,10 @@ export default function Loading() {
 
         {/* App Title */}
         <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
-          Aksara Jawa
+          Aksara Lontara
         </h1>
         <p className="text-xl text-orange-100 mb-8 drop-shadow">
-          Belajar bersama NARA
+          Learn with NARA
         </p>
 
         {/* Loading Bar */}
@@ -59,10 +59,10 @@ export default function Loading() {
         {/* Loading Messages */}
         <div className="mt-8">
           <p className="text-orange-100 animate-pulse">
-            {progress < 30 && "Memuat aksara Jawa..."}
-            {progress >= 30 && progress < 60 && "Menyiapkan pelajaran..."}
-            {progress >= 60 && progress < 90 && "Mengaktifkan NARA..."}
-            {progress >= 90 && "Siap belajar!"}
+            {progress < 30 && "Loading Lontara script..."}
+            {progress >= 30 && progress < 60 && "Preparing lessons..."}
+            {progress >= 60 && progress < 90 && "Activating NARA..."}
+            {progress >= 90 && "Ready to learn!"}
           </p>
         </div>
       </div>
