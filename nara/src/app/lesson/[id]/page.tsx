@@ -21,8 +21,8 @@ const lessonData = {
   title: "Lontara Script: Ka-Ga-Nga-Pa-Ba",
   videoUrl: "/placeholder.svg?height=400&width=600&text=Lontara+Learning+Video",
   characters: [
-    { char: "ᨀ", name: "Ka", sound: "ka" },
     { char: "ᨁ", name: "Ga", sound: "ga" },
+    { char: "ᨀ", name: "Ka", sound: "ka" },
     { char: "ᨂ", name: "Nga", sound: "nga" },
     { char: "ᨄ", name: "Pa", sound: "pa" },
     { char: "ᨅ", name: "Ba", sound: "ba" },
@@ -30,18 +30,18 @@ const lessonData = {
   questions: [
     {
       type: "multiple-choice",
-      question: "Select the correct character for the letter 'KA'",
+      question: "Select the correct character for the letter 'GA'",
       options: ["ᨀ", "ᨁ", "ᨂ", "ᨃ"],
-      correct: 0,
+      correct: 1,
       explanation:
-        "The character ᨀ (Ka) is the basic character for the 'ka' sound in the Lontara script.",
+        "The character ᨁ (Ga) is the basic character for the 'ga' sound in the Lontara script.",
     },
     {
       type: "drawing",
-      question: "Draw the character 'GA' (ᨁ)",
-      targetAksara: "ᨁ",
+      question: "Draw the character 'KA' (ᨀ)",
+      targetAksara: "ka",
       explanation:
-        "The character ᨁ (Ga) has a distinctive shape with vertical and horizontal lines.",
+        "The character ᨀ (Ka) has a distinctive shape with vertical lines.",
     },
     {
       type: "multiple-choice",
@@ -74,9 +74,9 @@ export default function LontaraLessonPage({
 }: {
   params: { id: string };
 }) {
-const [currentSection, setCurrentSection] = useState<"video" | "practice">(
-  "video"
-);
+  const [currentSection, setCurrentSection] = useState<"video" | "practice">(
+    "video"
+  );
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -168,17 +168,18 @@ const [currentSection, setCurrentSection] = useState<"video" | "practice">(
         });
 
         if (!response.ok) {
-          throw new Error("Prediction failed");
+          throw new Error("predicted_class failed");
         }
 
         const data = await response.json();
-        const prediction = data.prediction;
-        const correct = prediction === question.targetAksara;
+        console.log(data);
+        const predicted_class = data.predicted_class;
+        const correct = predicted_class === question.targetAksara;
         setIsCorrect(correct);
         if (correct) setScore(score + 1);
         setShowResult(true);
       } catch (error) {
-        console.error("Error during prediction:", error);
+        console.error("Error during predicted_class:", error);
         setError("Terjadi kesalahan saat memprediksi. Silakan coba lagi.");
       } finally {
         setIsLoading(false); // Stop loading
