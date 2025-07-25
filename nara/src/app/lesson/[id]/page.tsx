@@ -137,17 +137,51 @@ export default function LontaraLessonPage({
     }
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
+    setError(null); // Clear any previous errors
     if (question.type === "multiple-choice") {
       const correct = selectedAnswer === question.correct;
       setIsCorrect(correct);
       if (correct) setScore(score + 1);
+      setShowResult(true);
     } else {
-      // AI url
-      setIsCorrect(true);
-      setScore(score + 1);
+      setIsLoading(true); // Start loading
+      try {
+        const canvas = canvasRef.current;
+        if (!canvas) throw new Error("Canvas not found");
+
+        // Convert canvas to Blob
+        const blob = await new Promise<Blob>((resolve) => {
+          canvas.toBlob((blob) => resolve(blob!));
+        });
+
+        // Prepare FormData for API request
+        const formData = new FormData();
+        formData.append("file", blob, "drawing.png");
+
+        // Send POST request to Flask API
+        const response = await fetch("http://localhost:5000/predict", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Prediction failed");
+        }
+
+        const data = await response.json();
+        const prediction = data.prediction;
+        const correct = prediction === question.targetAksara;
+        setIsCorrect(correct);
+        if (correct) setScore(score + 1);
+        setShowResult(true);
+      } catch (error) {
+        console.error("Error during prediction:", error);
+        setError("Terjadi kesalahan saat memprediksi. Silakan coba lagi.");
+      } finally {
+        setIsLoading(false); // Stop loading
+      }
     }
-    setShowResult(true);
   };
 
   const nextQuestion = () => {
@@ -155,6 +189,7 @@ export default function LontaraLessonPage({
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
       setShowResult(false);
+      setError(null);
       clearCanvas();
     }
   };

@@ -47,7 +47,7 @@ export default function Navbar({ user }: NavbarProps) {
             href="/dashboard"
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-xl shadow-md flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full shadow-md flex items-center justify-center">
               <Image
                 src="/mascot-nara.png"
                 alt="NARA"
@@ -57,10 +57,13 @@ export default function Navbar({ user }: NavbarProps) {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-foreground">NARA</h1>
-              <p className="text-xs text-muted-foreground -mt-1">
+              {/* <h1 className="text-xl font-bold text-foreground">NARA</h1> */}
+              <h1 className="text-xl font-bold text-foreground">
                 Nenek Nusantara
-              </p>
+              </h1>
+              {/* <p className="text-xs text-muted-foreground -mt-1">
+                Nenek Nusantara
+              </p> */}
             </div>
           </Link>
 

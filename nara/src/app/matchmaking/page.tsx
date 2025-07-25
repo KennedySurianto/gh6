@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Users, Clock, Zap, Crown, Target, RotateCcw, BarChart2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import Navbar from "@/navbar"
 
 const quizData = {
   questions: [
@@ -48,7 +49,7 @@ const quizData = {
   ],
 }
 
-const INITIAL_TIME = 120;
+const INITIAL_TIME = 120
 
 export default function MatchmakingPage() {
   const [gameState, setGameState] = useState<"waiting" | "countdown" | "playing" | "finished">("waiting")
@@ -61,20 +62,15 @@ export default function MatchmakingPage() {
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIME)
   const [countdown, setCountdown] = useState(3)
   const [winner, setWinner] = useState<"player" | "opponent" | "tie" | null>(null)
-
-  // State for finish times and performance scores
   const [playerFinishTime, setPlayerFinishTime] = useState<number | null>(null)
   const [opponentFinishTime, setOpponentFinishTime] = useState<number | null>(null)
   const [playerPerformanceScore, setPlayerPerformanceScore] = useState(0)
   const [opponentPerformanceScore, setOpponentPerformanceScore] = useState(0)
-
   const [opponentCurrentQuestion, setOpponentCurrentQuestion] = useState(0)
   const [opponentIsThinking, setOpponentIsThinking] = useState(false)
-
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isDrawing, setIsDrawing] = useState(false)
   const [hasDrawn, setHasDrawn] = useState(false)
-
   const gameTimerRef = useRef<NodeJS.Timeout | null>(null)
   const countdownTimerRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -83,210 +79,179 @@ export default function MatchmakingPage() {
 
   // --- Drawing Canvas Functions (unchanged) ---
   const startDrawing = (e: MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas || selectedAnswer !== null) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    setIsDrawing(true);
-    setHasDrawn(true);
-    const rect = canvas.getBoundingClientRect();
-    ctx.beginPath();
-    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-  };
+    const canvas = canvasRef.current
+    if (!canvas || selectedAnswer !== null) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+    setIsDrawing(true)
+    setHasDrawn(true)
+    const rect = canvas.getBoundingClientRect()
+    ctx.beginPath()
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top)
+  }
   const draw = (e: MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || selectedAnswer !== null) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const rect = canvas.getBoundingClientRect();
-    ctx.lineWidth = 5;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000000";
-    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-    ctx.stroke();
-  };
-  const stopDrawing = () => setIsDrawing(false);
+    if (!isDrawing || selectedAnswer !== null) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+    const rect = canvas.getBoundingClientRect()
+    ctx.lineWidth = 5
+    ctx.lineCap = "round"
+    ctx.strokeStyle = "#000000"
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top)
+    ctx.stroke()
+  }
+  const stopDrawing = () => setIsDrawing(false)
   const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setHasDrawn(false);
-  };
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height)
+    setHasDrawn(false)
+  }
 
-  // --- Game Flow Functions ---
+  // --- Game Flow Functions (unchanged logic) ---
   const startMatchmaking = () => {
-    setGameState("countdown");
-    setCountdown(3);
+    if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+
+    setGameState("countdown")
+    setCountdown(3)
     countdownTimerRef.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          clearInterval(countdownTimerRef.current!);
-          startGame();
-          return 0;
+          clearInterval(countdownTimerRef.current!)
+          startGame()
+          return 0
         }
-        return prev - 1;
-      });
-    }, 1000);
-  };
+        return prev - 1
+      })
+    }, 1000)
+  }
 
   const startGame = () => {
-    setGameState("playing");
-    setTimeLeft(INITIAL_TIME);
-    setPlayerScore(0);
-    setPlayerProgress(0);
-    setCurrentQuestion(0);
-    setSelectedAnswer(null);
-    setOpponentScore(0);
-    setOpponentProgress(0);
-    setOpponentCurrentQuestion(0);
-    setWinner(null);
-    clearCanvas();
-    setPlayerFinishTime(null);
-    setOpponentFinishTime(null);
-    setPlayerPerformanceScore(0);
-    setOpponentPerformanceScore(0);
+    if (gameTimerRef.current) clearInterval(gameTimerRef.current);  
 
+    setGameState("playing")
+    setTimeLeft(INITIAL_TIME)
+    setPlayerScore(0)
+    setPlayerProgress(0)
+    setCurrentQuestion(0)
+    setSelectedAnswer(null)
+    setOpponentScore(0)
+    setOpponentProgress(0)
+    setOpponentCurrentQuestion(0)
+    setWinner(null)
+    clearCanvas()
+    setPlayerFinishTime(null)
+    setOpponentFinishTime(null)
+    setPlayerPerformanceScore(0)
+    setOpponentPerformanceScore(0)
     gameTimerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          endGame();
-          return 0;
+          endGame()
+          return 0
         }
-        return prev - 1;
-      });
-    }, 1000);
-  };
+        return prev - 1
+      })
+    }, 1000)
+  }
 
   const submitPlayerAnswer = (answerIndex?: number) => {
-    if (selectedAnswer !== null) return;
-    if (currentQuestionData.type === "multiple-choice" && typeof answerIndex !== "number") return;
-
-    setSelectedAnswer(answerIndex ?? 0);
-
+    if (selectedAnswer !== null) return
+    if (currentQuestionData.type === "multiple-choice" && typeof answerIndex !== "number") return
+    setSelectedAnswer(answerIndex ?? 0)
     setTimeout(() => {
       if (currentQuestionData.type === "multiple-choice" && answerIndex === currentQuestionData.correct) {
-        setPlayerScore((prev) => prev + 1);
+        setPlayerScore((prev) => prev + 1)
       }
-      const newProgress = currentQuestion + 1;
-      setPlayerProgress(newProgress);
-
+      const newProgress = currentQuestion + 1
+      setPlayerProgress(newProgress)
       if (newProgress >= totalQuestions && playerFinishTime === null) {
         setTimeLeft((currentTime) => {
-          setPlayerFinishTime(currentTime);
-          return currentTime;
-        });
+          setPlayerFinishTime(currentTime)
+          return currentTime
+        })
       }
-
       if (newProgress < totalQuestions) {
-        setCurrentQuestion(newProgress);
-        setSelectedAnswer(null);
-        clearCanvas();
-        setHasDrawn(false);
+        setCurrentQuestion(newProgress)
+        setSelectedAnswer(null)
+        clearCanvas()
+        setHasDrawn(false)
       }
-    }, 800);
-  };
+    }, 800)
+  }
 
   const endGame = () => {
-    if (gameState === "finished") return;
-    clearInterval(gameTimerRef.current!);
-    setGameState("finished");
-  };
+    if (gameState === "finished") return
+    clearInterval(gameTimerRef.current!)
+    setGameState("finished")
+  }
 
-  // --- Opponent and Game Logic Effects ---
+  // --- Game Logic Effects (unchanged) ---
   useEffect(() => {
-    if (gameState !== "playing" || opponentCurrentQuestion >= totalQuestions) return;
-
-    setOpponentIsThinking(true);
-    const currentQ = quizData.questions[opponentCurrentQuestion];
-    const thinkingTime = currentQ.type === "drawing" ? 4000 + Math.random() * 3000 : 2000 + Math.random() * 2000;
-
+    if (gameState !== "playing" || opponentCurrentQuestion >= totalQuestions) return
+    setOpponentIsThinking(true)
+    const currentQ = quizData.questions[opponentCurrentQuestion]
+    const thinkingTime = currentQ.type === "drawing" ? 4000 + Math.random() * 3000 : 2000 + Math.random() * 2000
     const thinkingTimer = setTimeout(() => {
       if (currentQ.type === "multiple-choice") {
-        if (Math.random() > 0.25) setOpponentScore((prev) => prev + 1);
+        if (Math.random() > 0.25) setOpponentScore((prev) => prev + 1)
       }
-
-      setOpponentIsThinking(false);
-      const newOpponentProgress = opponentProgress + 1;
-      setOpponentProgress(newOpponentProgress);
-
+      setOpponentIsThinking(false)
+      const newOpponentProgress = opponentProgress + 1
+      setOpponentProgress(newOpponentProgress)
       if (newOpponentProgress >= totalQuestions && opponentFinishTime === null) {
         setTimeLeft((currentTime) => {
-          setOpponentFinishTime(currentTime);
-          return currentTime;
-        });
+          setOpponentFinishTime(currentTime)
+          return currentTime
+        })
       }
-
       const nextQuestionTimer = setTimeout(() => {
         if (opponentCurrentQuestion + 1 < totalQuestions) {
-          setOpponentCurrentQuestion((prev) => prev + 1);
+          setOpponentCurrentQuestion((prev) => prev + 1)
         }
-      }, 1500);
-      return () => clearTimeout(nextQuestionTimer);
-    }, thinkingTime);
-
-    return () => clearTimeout(thinkingTimer);
-  }, [gameState, opponentCurrentQuestion]);
+      }, 1500)
+      return () => clearTimeout(nextQuestionTimer)
+    }, thinkingTime)
+    return () => clearTimeout(thinkingTimer)
+  }, [gameState, opponentCurrentQuestion])
 
   useEffect(() => {
-    if (gameState !== "playing") return;
+    if (gameState !== "playing") return
     if (playerProgress >= totalQuestions && opponentProgress >= totalQuestions) {
-      endGame();
+      endGame()
     }
-  }, [playerProgress, opponentProgress, gameState]);
+  }, [playerProgress, opponentProgress, gameState])
 
-  // Effect to determine the winner using the Performance Score formula
   useEffect(() => {
     if (gameState === "finished") {
       const calculatePerformanceScore = (score: number, progress: number, finishTime: number | null) => {
-        if (progress === 0) return 0;
-        const timeTaken = finishTime !== null ? INITIAL_TIME - finishTime : INITIAL_TIME;
-        return (Math.pow(score, 2) * progress * 1000) / Math.max(timeTaken, 1);
-      };
-
-      const playerPerf = calculatePerformanceScore(playerScore, playerProgress, playerFinishTime);
-      const opponentPerf = calculatePerformanceScore(opponentScore, opponentProgress, opponentFinishTime);
-
-      setPlayerPerformanceScore(Math.round(playerPerf));
-      setOpponentPerformanceScore(Math.round(opponentPerf));
-
-      if (playerPerf > opponentPerf) setWinner("player");
-      else if (opponentPerf > playerPerf) setWinner("opponent");
-      else setWinner("tie");
+        if (progress === 0) return 0
+        const timeTaken = finishTime !== null ? INITIAL_TIME - finishTime : INITIAL_TIME
+        return (Math.pow(score, 2) * progress * 1000) / Math.max(timeTaken, 1)
+      }
+      const playerPerf = calculatePerformanceScore(playerScore, playerProgress, playerFinishTime)
+      const opponentPerf = calculatePerformanceScore(opponentScore, opponentProgress, opponentFinishTime)
+      setPlayerPerformanceScore(Math.round(playerPerf))
+      setOpponentPerformanceScore(Math.round(opponentPerf))
+      if (playerPerf > opponentPerf) setWinner("player")
+      else if (opponentPerf > playerPerf) setWinner("opponent")
+      else setWinner("tie")
     }
-  }, [gameState]);
+  }, [gameState, playerScore, playerProgress, playerFinishTime, opponentScore, opponentProgress, opponentFinishTime])
 
   useEffect(() => {
     return () => {
-      clearInterval(gameTimerRef.current!);
-      clearInterval(countdownTimerRef.current!);
-    };
-  }, []);
+      clearInterval(gameTimerRef.current!)
+      clearInterval(countdownTimerRef.current!)
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
-      <header className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 shadow-lg">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-            </Link>
-            <div className="flex items-center gap-2">
-              <Users className="w-6 h-6" />
-              <h1 className="text-xl font-bold">Aksara Duel</h1>
-            </div>
-          </div>
-          {gameState === "playing" && (
-            <div className="flex items-center gap-2 bg-white/20 rounded-lg px-3 py-1 text-sm font-bold">
-              <Clock className="w-4 h-4" />
-              <span>{timeLeft}s</span>
-            </div>
-          )}
-        </div>
-      </header>
+      <Navbar />
 
       <div className="max-w-4xl mx-auto p-6">
         {gameState === "waiting" && (
@@ -319,6 +284,16 @@ export default function MatchmakingPage() {
 
         {gameState === "playing" && currentQuestionData && (
           <div className="space-y-6">
+            {/* ## TIMER MOVED HERE ## */}
+            <div className="flex justify-center">
+              <Card className="w-fit px-6 py-2 bg-slate-800 text-white shadow-lg border-2 border-yellow-400">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-6 h-6 text-yellow-400 animate-pulse" />
+                  <span className="text-2xl font-bold tracking-wider">{timeLeft}s</span>
+                </div>
+              </Card>
+            </div>
+
             <div className="grid grid-cols-2 gap-6">
               <Card className="border-blue-200 bg-blue-50">
                 <CardContent className="p-4">
@@ -401,14 +376,14 @@ export default function MatchmakingPage() {
                 <div className="text-6xl mb-4">{winner === "player" ? "🏆" : winner === "opponent" ? "😔" : "🤝"}</div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">{winner === "player" ? "You Win!" : winner === "opponent" ? "You Lose!" : "It's a Tie!"}</h2>
                 <p className="text-gray-600 mb-6">{winner === "player" ? "Great! Your accuracy and speed led to victory!" : winner === "opponent" ? "A tough opponent! Try again!" : "What a close match!"}</p>
-                <div className="grid grid-cols-2 gap-4 mb-6 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-left">
                   <div className={`p-4 rounded-lg space-y-2 ${winner === "player" ? "bg-green-100 border-2 border-green-300" : "bg-gray-100"}`}>
                     <div className="flex justify-between items-center">
                       <div className="font-bold">🧑 You</div>
                       <div className="text-lg font-bold text-blue-600">{playerScore} pts</div>
                     </div>
                     {playerFinishTime !== null ? (<div className="text-xs text-gray-600 flex items-center"><Clock className="w-3 h-3 mr-1" />Finished in {INITIAL_TIME - playerFinishTime}s</div>) : (<div className="text-xs text-gray-500 mt-2">Did not finish</div>)}
-                    <div className="text-xs font-bold text-gray-700 flex items-center"><BarChart2 className="w-3 h-3 mr-1" />Perf. Score: {playerPerformanceScore}</div>
+                    <div className="text-sm font-bold text-gray-800 flex items-center"><BarChart2 className="w-4 h-4 mr-1 text-blue-600" />Perf. Score: {playerPerformanceScore.toLocaleString()}</div>
                   </div>
                   <div className={`p-4 rounded-lg space-y-2 ${winner === "opponent" ? "bg-green-100 border-2 border-green-300" : "bg-gray-100"}`}>
                     <div className="flex justify-between items-center">
@@ -416,7 +391,7 @@ export default function MatchmakingPage() {
                       <div className="text-lg font-bold text-red-600">{opponentScore} pts</div>
                     </div>
                     {opponentFinishTime !== null ? (<div className="text-xs text-gray-600 flex items-center"><Clock className="w-3 h-3 mr-1" />Finished in {INITIAL_TIME - opponentFinishTime}s</div>) : (<div className="text-xs text-gray-500 mt-2">Did not finish</div>)}
-                     <div className="text-xs font-bold text-gray-700 flex items-center"><BarChart2 className="w-3 h-3 mr-1" />Perf. Score: {opponentPerformanceScore}</div>
+                     <div className="text-sm font-bold text-gray-800 flex items-center"><BarChart2 className="w-4 h-4 mr-1 text-red-600" />Perf. Score: {opponentPerformanceScore.toLocaleString()}</div>
                   </div>
                 </div>
                 <div className="space-y-3">
