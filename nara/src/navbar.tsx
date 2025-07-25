@@ -26,7 +26,7 @@ interface NavbarProps {
 
 export default function Navbar({ user }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const userFirebase = useFirebaseUser(); // Assuming you have a hook to get the current user
+  const userFirebase = useFirebaseUser();
 
   const defaultUser = {
     name: userFirebase?.displayName,
@@ -81,7 +81,7 @@ export default function Navbar({ user }: NavbarProps) {
                   variant="ghost"
                   className="text-muted-foreground hover:text-orange-600 hover:bg-orange-50"
                 >
-                  Latihan
+                  Practice
                 </Button>
               </Link>
               <Link href="/matchmaking">
@@ -105,7 +105,7 @@ export default function Navbar({ user }: NavbarProps) {
                   variant="ghost"
                   className="text-muted-foreground hover:text-orange-600 hover:bg-orange-50"
                 >
-                  Pencapaian
+                  Achievements
                 </Button>
               </Link>
             </div>
@@ -148,21 +148,23 @@ export default function Navbar({ user }: NavbarProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80">
                 <div className="p-3 border-b border-border">
-                  <h3 className="font-semibold">Notifikasi</h3>
+                  <h3 className="font-semibold">Notification</h3>
                 </div>
                 <DropdownMenuItem className="p-3">
                   <div>
-                    <p className="font-medium">Selamat! Streak 7 hari!</p>
+                    <p className="font-medium">
+                      Congratulations! 7-Day Streak!
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      Kamu berhasil belajar 7 hari berturut-turut
+                      You have successfully studied for 7 consecutive days
                     </p>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-3">
                   <div>
-                    <p className="font-medium">Pelajaran baru tersedia</p>
+                    <p className="font-medium">New Lesson Available</p>
                     <p className="text-sm text-muted-foreground">
-                      Aksara Pa-Dha-Ja-Ya-Nya sudah bisa dipelajari
+                      Pa-Dha-Ja-Ya-Nya characters are now ready to learn
                     </p>
                   </div>
                 </DropdownMenuItem>
@@ -185,18 +187,18 @@ export default function Navbar({ user }: NavbarProps) {
                 <DropdownMenuItem asChild>
                   <Link href="/profile" className="cursor-pointer">
                     <User className="w-4 h-4 mr-2" />
-                    Profil
+                    Profile
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/settings" className="cursor-pointer">
                     <Settings className="w-4 h-4 mr-2" />
-                    Pengaturan
+                    Settings
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/" className="cursor-pointer text-red-600">
-                    Keluar
+                    Logout
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -243,7 +245,7 @@ export default function Navbar({ user }: NavbarProps) {
                 </Link>
                 <Link href="/practice">
                   <Button variant="ghost" className="w-full justify-start">
-                    Latihan
+                    Practice
                   </Button>
                 </Link>
                 <Link href="/leaderboard">
@@ -253,7 +255,7 @@ export default function Navbar({ user }: NavbarProps) {
                 </Link>
                 <Link href="/achievements">
                   <Button variant="ghost" className="w-full justify-start">
-                    Pencapaian
+                    Achievements
                   </Button>
                 </Link>
               </div>
