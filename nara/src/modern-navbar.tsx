@@ -24,6 +24,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "./lib/firebase";
 
 interface ModernNavbarProps {
   user?: {
@@ -54,6 +57,8 @@ export default function ModernNavbar({ user }: ModernNavbarProps) {
     { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
     { href: "/achievements", label: "Pencapaian", icon: Award },
   ];
+
+  const router = useRouter();
 
   return (
     <nav className="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50">
@@ -187,11 +192,20 @@ export default function ModernNavbar({ user }: ModernNavbarProps) {
                     Settings
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/" className="cursor-pointer text-red-600">
+                <DropdownMenuItem
+                  onClick={async () => {
+                    try {
+                      await signOut(auth);
+                      router.push("/");
+                    } catch (error) {
+                      console.error("Logout error:", error);
+                    }
+                  }}
+                >
+                  <div className="flex items-center text-red-600 w-full">
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
-                  </Link>
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
