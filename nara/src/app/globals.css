@@ -1,6 +1,111 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "FTF Indonesiana Serif";
+  src: url("/fonts/FTF-Indonesiana-Serif.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FTF Indonesiana Sketch Book Serif";
+  src: url("/fonts/FTF-Indonesiana-Sketch-Book-Serif.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FTF Indonesiana Sketch Serif";
+  src: url("/fonts/FTF-Indonesiana-Sketch-Serif-v1.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Poppins Font Faces */
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -76,6 +181,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --font-indonesiana-serif: "FTF Indonesiana Serif", serif;
+  --font-indonesiana-sketch-book: "FTF Indonesiana Sketch Book Serif", serif;
+  --font-indonesiana-sketch: "FTF Indonesiana Sketch Serif", serif;
+  --font-poppins: "Poppins", sans-serif;
 }
 
 .dark {
@@ -110,6 +220,92 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+html,
+body {
+  cursor: none;
+}
+
+h1,
+h5,
+h6 {
+  font-family: var(--font-indonesiana-sketch-book);
+  letter-spacing: 1px;
+}
+
+p,
+span,
+div,
+a,
+button,
+input,
+textarea,
+label,
+.content-text {
+  font-family: var(--font-poppins);
+}
+
+.main-title {
+  font-family: var(--font-indonesiana-sketch-book);
+}
+
+.nusantara-subtitle {
+  font-family: var(--font-indonesiana-serif);
+}
+
+.decorative-text {
+  font-family: var(--font-indonesiana-sketch);
+}
+
+.indonesiana-title {
+  font-family: var(--font-indonesiana-sketch-book);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.indonesiana-heading {
+  font-family: var(--font-indonesiana-sketch-book);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.indonesiana-body {
+  font-family: var(--font-poppins);
+  letter-spacing: 0.005em;
+  line-height: 1.6;
+}
+
+.indonesiana-decorative {
+  font-family: var(--font-indonesiana-sketch);
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+/* Poppins weight classes */
+.poppins-thin {
+  font-family: var(--font-poppins);
+  font-weight: 100;
+}
+
+.poppins-light {
+  font-family: var(--font-poppins);
+  font-weight: 300;
+}
+
+.poppins-regular {
+  font-family: var(--font-poppins);
+  font-weight: 400;
+}
+
+.poppins-medium {
+  font-family: var(--font-poppins);
+  font-weight: 500;
+}
+
+.poppins-semibold {
+  font-family: var(--font-poppins);
+  font-weight: 600;
 }
 
 @layer base {
