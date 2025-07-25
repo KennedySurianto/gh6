@@ -74,15 +74,17 @@ export default function LontaraLessonPage({
 }: {
   params: { id: string };
 }) {
-  const [currentSection, setCurrentSection] = useState<"video" | "practice">(
-    "video"
-  );
+const [currentSection, setCurrentSection] = useState<"video" | "practice">(
+  "video"
+);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Added isLoading state
+  const [error, setError] = useState<string | null>(null); // Added error state
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
