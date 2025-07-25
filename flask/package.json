@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0"
+  }
+}
