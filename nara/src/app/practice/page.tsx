@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,9 +42,7 @@ const aksaraList: Aksara[] = [
 ];
 
 export default function Practice() {
-  const [currentSection, setCurrentSection] = useState<
-    "selection" | "practice"
-  >("selection");
+  const [currentSection, setCurrentSection] = useState<"selection" | "practice">("selection");
   const [mode, setMode] = useState<PracticeMode>("selection");
   const [currentAksara, setCurrentAksara] = useState<Aksara | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -62,10 +59,7 @@ export default function Practice() {
   const [isDrawing, setIsDrawing] = useState(false);
 
   const totalQuestions = 10;
-  const progress =
-    currentSection === "practice"
-      ? ((questionsAnswered + 1) / totalQuestions) * 100
-      : 0;
+  const progress = currentSection === "practice" ? ((questionsAnswered + 1) / totalQuestions) * 100 : 0;
 
   const initializeCanvas = () => {
     const canvas = canvasRef.current;
@@ -77,7 +71,7 @@ export default function Practice() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.strokeStyle = "#f97316";
+    ctx.strokeStyle = "#000000"; // Changed to black to match lesson page
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -134,7 +128,7 @@ export default function Practice() {
     if (mode === "drawing" || mode === "mixed") {
       setTimeout(initializeCanvas, 100);
     }
-  }, [mode, currentAksara]);
+  2}, [mode, currentAksara]);
 
   const startDrawingPractice = () => {
     setCurrentSection("practice");
@@ -167,9 +161,7 @@ export default function Practice() {
     const questionType = Math.random() > 0.5 ? "drawing" : "recognition";
 
     if (questionType === "drawing") {
-      setCurrentAksara(
-        aksaraList[Math.floor(Math.random() * aksaraList.length)]
-      );
+      setCurrentAksara(aksaraList[Math.floor(Math.random() * aksaraList.length)]);
       setRecognitionOptions([]);
       setSelectedAnswer(null);
       setShowResult(false);
@@ -186,7 +178,7 @@ export default function Practice() {
     while (options.length < 4) {
       const option = aksaraList[Math.floor(Math.random() * aksaraList.length)];
       if (!options.find((o) => o.name === option.name)) {
-        options.push(option);
+  options.push(option);
       }
     }
 
@@ -212,7 +204,7 @@ export default function Practice() {
   };
 
   const checkDrawing = async () => {
-    setError(null);
+     setError(null);
     setIsLoading(true);
     try {
       const canvas = canvasRef.current;
@@ -248,20 +240,14 @@ export default function Practice() {
       if (processCtx) {
         processCtx.fillStyle = "white";
         processCtx.fillRect(0, 0, processCanvas.width, processCanvas.height);
-        processCtx.drawImage(
-          canvas,
-          0,
-          0,
-          processCanvas.width,
-          processCanvas.height
-        );
+        processCtx.drawImage(canvas, 0, 0, processCanvas.width, processCanvas.height);
       }
 
       const blob = await new Promise<Blob>((resolve, reject) => {
         processCanvas.toBlob(
           (blob) => {
             if (blob) resolve(blob);
-            else reject(new Error("Failed to convert canvas to blob"));
+            else reject(new Error("PROF Failed to convert canvas to blob"));
           },
           "image/png",
           1.0
@@ -282,21 +268,14 @@ export default function Practice() {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(
-          `API request failed: ${response.status} - ${errorText}`
-        );
+        throw new Error(`API request failed: ${response.status} - ${errorText}`);
       }
 
       const responseData = await response.json();
       console.log("API Response:", responseData);
 
       const predicted_class = responseData.predicted_class;
-      console.log(
-        "Predicted:",
-        predicted_class,
-        "Expected:",
-        currentAksara?.name.toLowerCase()
-      );
+      console.log("Predicted:", predicted_class, "Expected:", currentAksara?.name.toLowerCase());
 
       const correct = predicted_class === currentAksara?.name.toLowerCase();
       setIsCorrect(correct);
@@ -331,9 +310,7 @@ export default function Practice() {
       } else if (mode === "recognition") {
         generateRecognitionQuestion();
       } else if (mode === "drawing") {
-        setCurrentAksara(
-          aksaraList[Math.floor(Math.random() * aksaraList.length)]
-        );
+        setCurrentAksara(aksaraList[Math.floor(Math.random() * aksaraList.length)]);
         clearCanvas();
         setShowResult(false);
         setTimeout(initializeCanvas, 100);
@@ -344,39 +321,21 @@ export default function Practice() {
   };
 
   const isCurrentlyDrawing = () => {
-    return (
-      mode === "drawing" ||
-      (mode === "mixed" && recognitionOptions.length === 0)
-    );
+    return mode === "drawing" || (mode === "mixed" && recognitionOptions.length === 0);
   };
 
   const isCurrentlyRecognition = () => {
-    return (
-      mode === "recognition" ||
-      (mode === "mixed" && recognitionOptions.length > 0)
-    );
+    return mode === "recognition" || (mode === "mixed" && recognitionOptions.length > 0);
   };
 
   if (currentSection === "selection") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
-        <Navbar
-          user={{
-            name: "You",
-            level: 3,
-            xp: 450,
-            streak: 7,
-            notifications: 2,
-          }}
-        />
+        <Navbar user={{ name: "You", level: 3, xp: 450, streak: 7, notifications: 2 }} />
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex items-center gap-4 mb-8">
             <Link href="/dashboard">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-orange-100"
-              >
+              <Button variant="ghost" size="icon" className="hover:bg-orange-100">
                 <ArrowLeft className="w-5 h-5" />
               </Button>
             </Link>
@@ -384,27 +343,18 @@ export default function Practice() {
               <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">
                 Script Practice
               </h1>
-              <p className="text-gray-600 text-lg">
-                Choose the type of practice you want to do
-              </p>
+              <p className="text-gray-600 text-lg">Choose the type of practice you want to do</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <Card className="group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0 bg-gradient-to-br from-orange-50 to-orange-100">
-              <CardContent
-                className="p-8 text-center"
-                onClick={startDrawingPractice}
-              >
+              <CardContent className="p-8 text-center" onClick={startDrawingPractice}>
                 <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Pencil className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-bold text-2xl text-gray-800 mb-3">
-                  Writing Practice
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Practice writing characters with responsive digital canvas
-                </p>
+                <h3 className="font-bold text-2xl text-gray-800 mb-3">Writing Practice</h3>
+                <p className="text-gray-600 mb-6">Practice writing characters with responsive digital canvas</p>
                 <Button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white">
                   Start Writing
                 </Button>
@@ -412,19 +362,12 @@ export default function Practice() {
             </Card>
 
             <Card className="group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0 bg-gradient-to-br from-blue-50 to-blue-100">
-              <CardContent
-                className="p-8 text-center"
-                onClick={startRecognitionPractice}
-              >
+              <CardContent className="p-8 text-center" onClick={startRecognitionPractice}>
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <MousePointer className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-bold text-2xl text-gray-800 mb-3">
-                  Character Recognition
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Practice recognizing and identifying characters
-                </p>
+                <h3 className="font-bold text-2xl text-gray-800 mb-3">Character Recognition</h3>
+                <p className="text-gray-600 mb-6">Practice recognizing and identifying characters</p>
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white">
                   Start Recognition
                 </Button>
@@ -432,20 +375,12 @@ export default function Practice() {
             </Card>
 
             <Card className="group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0 bg-gradient-to-br from-purple-50 to-purple-100">
-              <CardContent
-                className="p-8 text-center"
-                onClick={startMixedPractice}
-              >
+              <CardContent className="p-8 text-center" onClick={startMixedPractice}>
                 <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Shuffle className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-bold text-2xl text-gray-800 mb-3">
-                  Mixed Practice
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Combination of writing and recognition for comprehensive
-                  practice
-                </p>
+                <h3 className="font-bold text-2xl text-gray-800 mb-3">Mixed Practice</h3>
+                <p className="text-gray-600 mb-6">Combination of writing and recognition for comprehensive practice</p>
                 <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
                   Start Mixed
                 </Button>
@@ -478,15 +413,9 @@ export default function Practice() {
                     }}
                   >
                     <CardContent className="p-4 text-center">
-                      <div className="text-4xl font-bold text-orange-600 mb-2">
-                        {item.aksara}
-                      </div>
-                      <h4 className="font-semibold text-gray-800 text-sm">
-                        {item.name}
-                      </h4>
-                      <p className="text-xs text-gray-500 mb-1">
-                        /{item.sound}/
-                      </p>
+                      <div className="text-4xl font-bold text-orange-600 mb-2">{item.aksara}</div>
+                      <h4 className="font-semibold text-gray-800 text-sm">{item.name}</h4>
+                      <p className="text-xs text-gray-500 mb-1">/{item.sound}/</p>
                       <Badge
                         variant="outline"
                         className={`text-xs ${
@@ -512,15 +441,7 @@ export default function Practice() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
-      <Navbar
-        user={{
-          name: "You",
-          level: 3,
-          xp: 450,
-          streak: 7,
-          notifications: 2,
-        }}
-      />
+      <Navbar user={{ name: "You", level: 3, xp: 450, streak: 7, notifications: 2 }} />
 
       <header className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-4 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -535,19 +456,13 @@ export default function Practice() {
             </Button>
             <div>
               <h1 className="text-xl font-bold">
-                {mode === "drawing"
-                  ? "Writing Practice"
-                  : mode === "recognition"
-                  ? "Character Recognition"
-                  : "Mixed Practice"}
+                {mode === "drawing" ? "Writing Practice" : mode === "recognition" ? "Character Recognition" : "Mixed Practice"}
               </h1>
               <Progress value={progress} className="w-64 mt-1" />
             </div>
           </div>
           <div className="text-right">
-            <p className="text-sm text-orange-100">
-              Question {currentQuestion + 1} of {totalQuestions}
-            </p>
+            <p className="text-sm text-orange-100">Question {currentQuestion + 1} of {totalQuestions}</p>
             <p className="text-sm text-orange-100">Score: {score}</p>
           </div>
         </div>
@@ -558,18 +473,10 @@ export default function Practice() {
           <div className="lg:col-span-1">
             <Card className="border-orange-200 mb-6">
               <CardContent className="p-6 text-center">
-                <Image
-                  src="/mascot-nara.png"
-                  alt="Practice Mascot"
-                  width={120}
-                  height={120}
-                  className="mx-auto mb-4"
-                />
+                <Image src="/mascot-nara.png" alt="Practice Mascot" width={120} height={120} className="mx-auto mb-4" />
                 <div className="bg-orange-100 rounded-lg p-3">
                   <p className="text-sm text-gray-700">
-                    {isCurrentlyDrawing()
-                      ? "Draw the character carefully!"
-                      : "Choose the correct answer!"}
+                    {isCurrentlyDrawing() ? "Draw the character carefully!" : "Choose the correct answer!"}
                   </p>
                 </div>
               </CardContent>
@@ -577,20 +484,13 @@ export default function Practice() {
 
             <Card className="border-orange-200">
               <CardHeader>
-                <CardTitle className="text-lg text-gray-800">
-                  Character Reference
-                </CardTitle>
+                <CardTitle className="text-lg text-gray-800">Character Reference</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-3">
                   {aksaraList.slice(0, 8).map((char, index) => (
-                    <div
-                      key={index}
-                      className="text-center p-2 bg-orange-50 rounded-lg"
-                    >
-                      <div className="text-2xl text-orange-600 mb-1">
-                        {char.aksara}
-                      </div>
+                    <div key={index} className="text-center p-2 bg-orange-50 rounded-lg">
+                      <div className="text-2xl text-orange-600 mb-1">{char.aksara}</div>
                       <div className="text-xs text-gray-600">{char.name}</div>
                     </div>
                   ))}
@@ -603,9 +503,7 @@ export default function Practice() {
             <Card className="border-orange-200">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800">
-                  {isCurrentlyDrawing()
-                    ? `Write the character: ${currentAksara?.name}`
-                    : "What character is this?"}
+                  {isCurrentlyDrawing() ? `Write the character: ${currentAksara?.name}` : "What character is this?"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -616,15 +514,13 @@ export default function Practice() {
                       <div className="text-8xl font-bold text-orange-600 mb-4 p-6 bg-orange-50 rounded-2xl">
                         {currentAksara?.aksara}
                       </div>
-                      <Badge className="bg-orange-100 text-orange-800">
-                        {currentAksara?.level} • /{currentAksara?.sound}/
-                      </Badge>
+                      <Badge className="bg-orange-100 text-orange-800">{currentAksara?.level} • /{currentAksara?.sound}/</Badge>
                     </div>
 
                     <div className="border-2 border-orange-200 rounded-lg p-4 bg-white">
                       <canvas
                         ref={canvasRef}
-                        width={500}
+                        width={400} // Changed to match lesson page
                         height={300}
                         className="border border-gray-300 rounded cursor-crosshair mx-auto block"
                         onMouseDown={startDrawing}
@@ -663,9 +559,7 @@ export default function Practice() {
                 ) : (
                   <div className="space-y-6">
                     <div className="text-center">
-                      <div className="text-9xl font-bold text-blue-600 mb-6 p-8 bg-blue-50 rounded-2xl">
-                        {currentAksara?.aksara}
-                      </div>
+                      <div className="text-9xl font-bold text-blue-600 mb-6 p-8 bg-blue-50 rounded-2xl">{currentAksara?.aksara}</div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -683,20 +577,13 @@ export default function Practice() {
                                 : "opacity-50"
                               : "hover:bg-blue-50 hover:border-blue-300"
                           }`}
-                          onClick={() =>
-                            !showResult && handleRecognitionAnswer(option.name)
-                          }
+                          onClick={() => !showResult && handleRecognitionAnswer(option.name)}
                           disabled={showResult}
                         >
-                          {showResult &&
-                            option.name === currentAksara?.name && (
-                              <Check className="w-5 h-5 mr-2" />
-                            )}
-                          {showResult &&
-                            option.name === selectedAnswer &&
-                            option.name !== currentAksara?.name && (
-                              <X className="w-5 h-5 mr-2" />
-                            )}
+                          {showResult && option.name === currentAksara?.name && <Check className="w-5 h-5 mr-2" />}
+                          {showResult && option.name === selectedAnswer && option.name !== currentAksara?.name && (
+                            <X className="w-5 h-5 mr-2" />
+                          )}
                           {option.name}
                         </Button>
                       ))}
@@ -715,24 +602,10 @@ export default function Practice() {
                 )}
 
                 {showResult && (
-                  <div
-                    className={`mt-6 p-4 rounded-lg ${
-                      isCorrect
-                        ? "bg-green-100 border border-green-200"
-                        : "bg-red-100 border border-red-200"
-                    }`}
-                  >
+                  <div className={`mt-6 p-4 rounded-lg ${isCorrect ? "bg-green-100 border border-green-200" : "bg-red-100 border border-red-200"}`}>
                     <div className="flex items-center gap-2 mb-2">
-                      {isCorrect ? (
-                        <Check className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <X className="w-5 h-5 text-red-600" />
-                      )}
-                      <span
-                        className={`font-bold ${
-                          isCorrect ? "text-green-800" : "text-red-800"
-                        }`}
-                      >
+                      {isCorrect ? <Check className="w-5 h-5 text-green-600" /> : <X className="w-5 h-5 text-red-600" />}
+                      <span className={`font-bold ${isCorrect ? "text-green-800" : "text-red-800"}`}>
                         {isCorrect ? "Correct! Great job!" : "Wrong!"}
                       </span>
                     </div>
@@ -746,12 +619,9 @@ export default function Practice() {
 
                 {questionsAnswered >= totalQuestions && (
                   <div className="mt-6 p-6 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg text-center">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                      Practice Complete!
-                    </h3>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Practice Complete!</h3>
                     <p className="text-lg text-gray-700 mb-4">
-                      Final Score: {score}/{totalQuestions} (
-                      {Math.round((score / totalQuestions) * 100)}%)
+                      Final Score: {score}/{totalQuestions} ({Math.round((score / totalQuestions) * 100)}%)
                     </p>
                     <div className="flex gap-3 justify-center">
                       <Button
@@ -762,9 +632,7 @@ export default function Practice() {
                         Try Another Practice
                       </Button>
                       <Link href="/dashboard">
-                        <Button className="bg-green-500 hover:bg-green-600">
-                          Back to Dashboard
-                        </Button>
+                        <Button className="bg-green-500 hover:bg-green-600">Back to Dashboard</Button>
                       </Link>
                     </div>
                   </div>

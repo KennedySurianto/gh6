@@ -48,10 +48,9 @@ export default function DuelPage() {
   const router = useRouter();
   const duelId = params.duelId as string;
 
-  const [quizData, setQuizData] = useState<{ questions: Question[] }>({
+  const [quizData, setQuizData] = useState<{ questions: any[] }>({
     questions: [],
   });
-
   const [gameState, setGameState] = useState<
     "connecting" | "countdown" | "playing" | "waiting_for_finish" | "finished"
   >("connecting");

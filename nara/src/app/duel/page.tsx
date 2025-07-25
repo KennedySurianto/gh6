@@ -98,9 +98,7 @@ const [myId, setMyId] = useState<string | null>(null);
 
     const channel = pusherInstance.subscribe("presence-aksara-duel");
 
-  channel.bind(
-    "pusher:subscription_succeeded",
-    (currentMembers: CurrentMembers) => {
+    channel.bind("pusher:subscription_succeeded", (currentMembers: any) => {
       setStatus("Waiting for opponent...");
       setMyId(currentMembers.myID);
       const memberArray = Object.keys(currentMembers.members).map((id) => ({
@@ -108,17 +106,19 @@ const [myId, setMyId] = useState<string | null>(null);
         info: currentMembers.members[id],
       }));
       setMembers(memberArray);
-    }
-  );
+    });
 
-  channel.bind("pusher:member_added", (member: PresenceMember) => {
-    setMembers((prev) => [...prev, member]);
-  });
+    channel.bind("pusher:member_added", (member: any) => {
+      setMembers((prev) => [...prev, member]);
+    });
 
-  channel.bind("pusher:member_removed", (member: PresenceMember) => {
-    setMembers((prev) => prev.filter((m) => m.id !== member.id));
-  });
+    channel.bind("pusher:member_removed", (member: any) => {
+      setMembers((prev) => prev.filter((m) => m.id !== member.id));
+    });
 
+    channel.bind("duel-starting", (data: { duelId: string }) => {
+      router.push(`/duel/${data.duelId}`);
+    });
 
     return () => {
       pusherInstance.unsubscribe("presence-aksara-duel");

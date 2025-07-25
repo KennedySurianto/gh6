@@ -18,6 +18,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/navbar";
+import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
+import { useRouter } from "next/navigation";
 
 const quizData = {
   questions: [
@@ -61,6 +63,7 @@ const quizData = {
 const INITIAL_TIME = 120;
 
 export default function MatchmakingPage() {
+  const router = useRouter();
   const [gameState, setGameState] = useState<
     "waiting" | "countdown" | "playing" | "finished"
   >("waiting");
@@ -128,20 +131,22 @@ export default function MatchmakingPage() {
 
   // --- Game Flow Functions ---
   const startMatchmaking = () => {
-    if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
+    // if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
 
-    setGameState("countdown");
-    setCountdown(3);
-    countdownTimerRef.current = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(countdownTimerRef.current!);
-          startGame();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    // setGameState("countdown");
+    // setCountdown(3);
+    // countdownTimerRef.current = setInterval(() => {
+    //   setCountdown((prev) => {
+    //     if (prev <= 1) {
+    //       clearInterval(countdownTimerRef.current!);
+    //       startGame();
+    //       return 0;
+    //     }
+    //     return prev - 1;
+    //   });
+    // }, 1000);
+
+    router.push("/duel")
   };
 
   const startGame = () => {
