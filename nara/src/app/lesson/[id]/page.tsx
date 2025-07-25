@@ -1,11 +1,11 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowLeft, RotateCcw, Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,6 +43,8 @@ export default function LessonPage({ params }: { params: { id: string } }) {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -100,17 +102,51 @@ export default function LessonPage({ params }: { params: { id: string } }) {
     }
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
+    setError(null); // Clear any previous errors
     if (question.type === "multiple-choice") {
       const correct = selectedAnswer === question.correct;
       setIsCorrect(correct);
       if (correct) setScore(score + 1);
+      setShowResult(true);
     } else {
-      // For drawing, we'll simulate checking (in real app, you'd use ML)
-      setIsCorrect(true);
-      setScore(score + 1);
+      setIsLoading(true); // Start loading
+      try {
+        const canvas = canvasRef.current;
+        if (!canvas) throw new Error("Canvas not found");
+
+        // Convert canvas to Blob
+        const blob = await new Promise<Blob>((resolve) => {
+          canvas.toBlob((blob) => resolve(blob!));
+        });
+
+        // Prepare FormData for API request
+        const formData = new FormData();
+        formData.append("file", blob, "drawing.png");
+
+        // Send POST request to Flask API
+        const response = await fetch("http://localhost:5000/predict", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Prediction failed");
+        }
+
+        const data = await response.json();
+        const prediction = data.prediction;
+        const correct = prediction === question.targetAksara;
+        setIsCorrect(correct);
+        if (correct) setScore(score + 1);
+        setShowResult(true);
+      } catch (error) {
+        console.error("Error during prediction:", error);
+        setError("Terjadi kesalahan saat memprediksi. Silakan coba lagi.");
+      } finally {
+        setIsLoading(false); // Stop loading
+      }
     }
-    setShowResult(true);
   };
 
   const nextQuestion = () => {
@@ -118,6 +154,7 @@ export default function LessonPage({ params }: { params: { id: string } }) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
       setShowResult(false);
+      setError(null);
       clearCanvas();
     }
   };
@@ -184,6 +221,15 @@ export default function LessonPage({ params }: { params: { id: string } }) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
+                {/* Display error if it exists */}
+                {error && (
+                  <Alert className="border-red-200 bg-red-50 mb-4">
+                    <AlertDescription className="text-red-700">
+                      {error}
+                    </AlertDescription>
+                  </Alert>
+                )}
+
                 {question.type === "multiple-choice" ? (
                   <div className="grid grid-cols-2 gap-4">
                     {question.options?.map((option, index) => (
@@ -274,13 +320,13 @@ export default function LessonPage({ params }: { params: { id: string } }) {
                       <Button
                         onClick={checkAnswer}
                         disabled={
-                          question.type === "multiple-choice"
-                            ? selectedAnswer === null
-                            : false
+                          (question.type === "multiple-choice" &&
+                            selectedAnswer === null) ||
+                          isLoading
                         }
                         className="bg-orange-500 hover:bg-orange-600"
                       >
-                        Periksa
+                        {isLoading ? "Memproses..." : "Periksa"}
                       </Button>
                     ) : (
                       <>

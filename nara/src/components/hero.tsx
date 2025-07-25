@@ -6,8 +6,6 @@ import {
   Mic,
   Upload,
   Map,
-  Sparkles,
-  FlameIcon as Fire,
   BookOpen,
   Trophy,
 } from "lucide-react";
@@ -179,14 +177,6 @@ export function Hero() {
                   ꦤꦫ - ꦤꦺꦤꦺꦏ꧀ ꦤꦸꦱꦤ꧀ꦠꦫ
                 </p>
               </div>
-            </div>
-
-            {/* Enhanced floating decorations */}
-            <div className="absolute -top-8 -right-8">
-              <Sparkles className="w-12 h-12 text-yellow-400 animate-pulse drop-shadow-lg" />
-            </div>
-            <div className="absolute -bottom-4 -left-4">
-              <Fire className="w-10 h-10 text-amber-500 animate-bounce drop-shadow-lg" />
             </div>
           </div>
 

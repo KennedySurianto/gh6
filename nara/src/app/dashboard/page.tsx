@@ -112,11 +112,11 @@ export default function Dashboard() {
             <span className="font-bold">Unit 1</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Belajar Aksara Jawa
+            Learn Now
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Mulai perjalanan belajarmu dengan aksara Jawa dasar. Selesaikan
-            setiap pelajaran untuk membuka level berikutnya!
+          <p className="text-gray-600 max-w-xl mx-auto">
+            Start your Journey with Nara, the Aksara Lontara Learning Platform.
+            Explore the basics of Aksara Lontara and unlock your potential.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export default function Dashboard() {
             <CardContent className="p-6 text-center">
               <Flame className="w-8 h-8 mx-auto mb-2" />
               <div className="text-2xl font-bold">{currentStreak}</div>
-              <div className="text-orange-100">Hari Berturut</div>
+              <div className="text-orange-100">Streaks</div>
             </CardContent>
           </Card>
 
@@ -144,7 +144,7 @@ export default function Dashboard() {
               <div className="text-2xl font-bold">
                 {completedLessons}/{lessons.length}
               </div>
-              <div className="text-green-100">Pelajaran Selesai</div>
+              <div className="text-green-100">Course Finished</div>
             </CardContent>
           </Card>
         </div>
@@ -154,10 +154,10 @@ export default function Dashboard() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-800">
-                Progress Belajar
+                Learning Progress
               </h3>
               <Badge className="bg-orange-500 text-white">
-                {Math.round(progressPercent)}% Selesai
+                {Math.round(progressPercent)}% Completed
               </Badge>
             </div>
             <Progress value={progressPercent} className="h-4 bg-gray-200" />
